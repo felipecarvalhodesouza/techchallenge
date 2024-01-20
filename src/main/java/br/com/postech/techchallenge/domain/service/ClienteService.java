@@ -4,13 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.postech.techchallenge.domain.model.Cliente;
-import br.com.postech.techchallenge.ports.RegistraClienteOutputPort;
+import br.com.postech.techchallenge.ports.ClienteOutputPort;
 
 @Service
 public class ClienteService {
 
-	@Autowired
-	private RegistraClienteOutputPort port;
+	private final ClienteOutputPort port;
+	
+    @Autowired
+    public ClienteService(ClienteOutputPort port) {
+        this.port = port;
+    }
+
+    public Cliente salvarCliente(Cliente cliente) {
+        return port.registrarCliente(cliente);
+    }
 
 	public Cliente getCliente(String descricao) {
 		return port.getCliente(descricao);
