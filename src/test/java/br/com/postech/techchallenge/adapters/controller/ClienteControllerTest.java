@@ -36,11 +36,7 @@ class ClienteControllerTest {
 		HttpEntity<Cliente> clienteEntity = clienteController.registrarCliente(cliente);
 		
 		assertNotNull(clienteEntity.getBody());
-		assertEquals(clienteEntity.getBody().getCpf(), 0);
+		assertEquals(0, clienteEntity.getBody().getCpf());
 
 	}
-	
-	
-	
-
 }
