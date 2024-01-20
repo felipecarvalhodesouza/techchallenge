@@ -16,7 +16,7 @@ public class ClienteService {
         this.port = port;
     }
 
-    public Cliente salvarCliente(Cliente cliente) {
+    public Cliente registrarCliente(Cliente cliente) {
         return port.registrarCliente(cliente);
     }
 
