@@ -25,26 +25,8 @@ services:
       - SONAR_JDBC_PASSWORD=sonar
     volumes:
       - ./sonarqube/conf:/opt/sonarqube/conf
-    networks:
-      - sonarqube-network
-    depends_on:
-      - sonarqube-db
-
-  sonarqube-db:
-    image: postgres
-    environment:
-      - POSTGRES_USER=sonar
-      - POSTGRES_PASSWORD=sonar
-      - POSTGRES_DB=sonar
-    networks:
-      - sonarqube-network
-    volumes:
-      - sonarqube-db-data:/var/lib/postgresql/data
-
-networks:
-  sonarqube-network:
-    driver: bridge
+      - ./sonarqube/sonarqube_data:/opt/sonarqube/data
 
 volumes:
   mysql-data:
-  sonarqube-db-data:
+  sonarqube_data:

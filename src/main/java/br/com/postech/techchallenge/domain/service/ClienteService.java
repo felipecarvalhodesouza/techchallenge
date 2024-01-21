@@ -13,26 +13,30 @@ import br.com.postech.techchallenge.ports.ClienteOutputPort;
 public class ClienteService {
 
 	private final ClienteOutputPort port;
-	
-    @Autowired
-    public ClienteService(ClienteOutputPort port) {
-        this.port = port;
-    }
 
-    public Cliente registrarCliente(Cliente cliente) throws CpfInvalidoException, CpfDuplicadoException {
-    	if(!ValidadorCPF.validarCPF(String.valueOf(cliente.getCpf()))) {
-    		throw new CpfInvalidoException();
-    	}
-    	
-    	if(port.getClientePor(String.valueOf(cliente.getCpf())) != null) {
-    		throw new CpfDuplicadoException();
-    	}
-
-        return port.registrarCliente(cliente);
-    }
+	@Autowired
+	public ClienteService(ClienteOutputPort port) {
+		this.port = port;
+	}
 
 	public Cliente getCliente(String cpf) {
 		return port.getClientePor(cpf);
+	}
+
+	public Cliente registrarCliente(Cliente cliente) throws CpfInvalidoException, CpfDuplicadoException {
+		if (!ValidadorCPF.validarCPF(String.valueOf(cliente.getCpf()))) {
+			throw new CpfInvalidoException();
+		}
+
+		if (port.getClientePor(String.valueOf(cliente.getCpf())) != null) {
+			throw new CpfDuplicadoException();
+		}
+
+		return port.registrarCliente(cliente);
+	}
+	
+	public Cliente editarCliente(Cliente cliente) {
+		return cliente;
 	}
 
 	public void removerCliente(Long id) {
