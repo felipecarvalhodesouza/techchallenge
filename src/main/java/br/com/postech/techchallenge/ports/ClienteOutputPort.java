@@ -7,6 +7,8 @@ import br.com.postech.techchallenge.domain.model.Cliente;
 public interface ClienteOutputPort {
 
 	Cliente getClientePor(String cpf);
+	
+	Cliente getClientePor(Long id);
 
 	Cliente registrarCliente(Cliente cliente);
 	

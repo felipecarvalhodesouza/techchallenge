@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.postech.techchallenge.domain.model.Cliente;
 import br.com.postech.techchallenge.domain.service.ClienteService;
+import br.com.postech.techchallenge.domain.service.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.service.exception.CpfDuplicadoException;
 import br.com.postech.techchallenge.domain.service.exception.CpfInvalidoException;
 import br.com.postech.techchallenge.ports.ClienteInputPort;
@@ -53,8 +54,8 @@ public class ClienteController implements ClienteInputPort {
 	@ApiResponse(responseCode = "200", description = "Registro alterado com sucesso")
 	@Override
 	@PutMapping
-	public HttpEntity<Cliente> editarCliente(Cliente cliente) {
-		return null;
+	public HttpEntity<Cliente> editarCliente(Cliente cliente) throws ClienteInexistenteException {
+		return new ResponseEntity<>(service.editarCliente(cliente), HttpStatus.OK);
 	}
 
 	@DeleteMapping

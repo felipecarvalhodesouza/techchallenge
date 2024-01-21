@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.postech.techchallenge.domain.model.Cliente;
+import br.com.postech.techchallenge.domain.service.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.service.exception.CpfDuplicadoException;
 import br.com.postech.techchallenge.domain.service.exception.CpfInvalidoException;
 import br.com.postech.techchallenge.domain.util.ValidadorCPF;
@@ -34,9 +35,14 @@ public class ClienteService {
 
 		return port.registrarCliente(cliente);
 	}
-	
-	public Cliente editarCliente(Cliente cliente) {
-		return cliente;
+
+	public Cliente editarCliente(Cliente cliente) throws ClienteInexistenteException {
+		Cliente clientePersistido = port.getClientePor(cliente.getId());
+		if(clientePersistido == null) {
+			throw new ClienteInexistenteException();
+		}
+
+		return port.editarCliente(cliente);
 	}
 
 	public void removerCliente(Long id) {

@@ -30,8 +30,7 @@ public class ClientePortImpl implements ClienteOutputPort {
 
 	@Override
 	public Cliente editarCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return null;
+		return clienteJpaRepository.save(cliente);
 	}
 
 	@Override
@@ -41,7 +40,11 @@ public class ClientePortImpl implements ClienteOutputPort {
 
 	@Override
 	public List<Cliente> getTodosOsClientes() {
-		// TODO Auto-generated method stub
-		return null;
+		return clienteJpaRepository.findAll();
+	}
+
+	@Override
+	public Cliente getClientePor(Long id) {
+		return clienteJpaRepository.findById(id).orElse(null);
 	}
 }

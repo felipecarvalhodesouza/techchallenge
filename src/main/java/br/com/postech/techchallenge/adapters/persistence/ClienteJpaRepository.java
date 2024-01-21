@@ -7,5 +7,4 @@ import br.com.postech.techchallenge.domain.model.Cliente;
 public interface ClienteJpaRepository extends JpaRepository<Cliente, Long>{
 
 	Cliente getByCpf(Long cpf);
-
 }
