@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.postech.techchallenge.domain.model.Cliente;
+import br.com.postech.techchallenge.domain.service.exception.CpfDuplicadoException;
+import br.com.postech.techchallenge.domain.service.exception.CpfInvalidoException;
+import br.com.postech.techchallenge.domain.util.ValidadorCPF;
 import br.com.postech.techchallenge.ports.ClienteOutputPort;
 
 @Service
@@ -16,11 +19,23 @@ public class ClienteService {
         this.port = port;
     }
 
-    public Cliente registrarCliente(Cliente cliente) {
+    public Cliente registrarCliente(Cliente cliente) throws CpfInvalidoException, CpfDuplicadoException {
+    	if(!ValidadorCPF.validarCPF(String.valueOf(cliente.getCpf()))) {
+    		throw new CpfInvalidoException();
+    	}
+    	
+    	if(port.getClientePor(String.valueOf(cliente.getCpf())) != null) {
+    		throw new CpfDuplicadoException();
+    	}
+
         return port.registrarCliente(cliente);
     }
 
-	public Cliente getCliente(String descricao) {
-		return port.getCliente(descricao);
+	public Cliente getCliente(String cpf) {
+		return port.getClientePor(cpf);
+	}
+
+	public void removerCliente(Long id) {
+		port.removerCliente(id);
 	}
 }

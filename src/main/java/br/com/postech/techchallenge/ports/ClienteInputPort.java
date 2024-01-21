@@ -1,12 +1,22 @@
 package br.com.postech.techchallenge.ports;
 
+import java.util.List;
+
 import org.springframework.http.HttpEntity;
 
 import br.com.postech.techchallenge.domain.model.Cliente;
+import br.com.postech.techchallenge.domain.service.exception.CpfDuplicadoException;
+import br.com.postech.techchallenge.domain.service.exception.CpfInvalidoException;
 
 public interface ClienteInputPort {
 
-	HttpEntity<Cliente> registrarCliente(Cliente cliente);
+	HttpEntity<Cliente> getClientePor(String cpf);
 
-	HttpEntity<Cliente> getCliente(String descricao);
+	HttpEntity<Cliente> registrarCliente(Cliente cliente) throws CpfInvalidoException, CpfDuplicadoException;
+	
+	HttpEntity<Cliente> editarCliente(Cliente cliente);
+	
+	HttpEntity<Object> removerCliente(Long id);
+	
+	HttpEntity<List<Cliente>> getTodosOsClientes();
 }

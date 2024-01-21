@@ -1,5 +1,7 @@
 package br.com.postech.techchallenge.adapters.persistence;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,12 +19,29 @@ public class ClientePortImpl implements ClienteOutputPort {
 	}
 
 	@Override
-	public Cliente getCliente(String descricao) {
-		return clienteJpaRepository.getByNomeOrEmail(descricao, descricao);
+	public Cliente getClientePor(String cpf) {
+		return clienteJpaRepository.getByCpf(Long.valueOf(cpf));
 	}
 
 	@Override
 	public Cliente registrarCliente(Cliente cliente) {
 		return clienteJpaRepository.save(cliente);
+	}
+
+	@Override
+	public Cliente editarCliente(Cliente cliente) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void removerCliente(Long id) {
+		clienteJpaRepository.deleteById(id);
+	}
+
+	@Override
+	public List<Cliente> getTodosOsClientes() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
