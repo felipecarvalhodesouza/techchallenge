@@ -1,5 +1,7 @@
 package br.com.postech.techchallenge.domain.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +49,9 @@ public class ClienteService {
 
 	public void removerCliente(Long id) {
 		port.removerCliente(id);
+	}
+	
+	public List<Cliente> getTodosOsClientes() {
+		return port.getTodosOsClientes();
 	}
 }

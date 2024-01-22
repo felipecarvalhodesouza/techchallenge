@@ -22,9 +22,11 @@ import br.com.postech.techchallenge.ports.ClienteInputPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/clientes")
+@Tag(name = "1 - API de Clientes", description = "API responsável por todos os fluxos relacionados a Cliente")
 public class ClienteController implements ClienteInputPort {
 
 	ClienteService service;
@@ -32,6 +34,14 @@ public class ClienteController implements ClienteInputPort {
 	@Autowired
 	public ClienteController(ClienteService service) {
 		this.service = service;
+	}
+
+	@Operation(summary = "Buscar um cliente", description ="Retorna os dados de um determinado cliente")
+	@ApiResponse(responseCode = "200")
+	@GetMapping
+	@Override
+	public HttpEntity<Cliente> getClientePor(String cpf) {
+		return new ResponseEntity<>(service.getCliente(cpf), HttpStatus.OK);
 	}
 
 	@Operation(summary = "Registrar um cliente", description ="Deve enviar os dados necessários para guardar um cliente no sistema")
@@ -42,14 +52,6 @@ public class ClienteController implements ClienteInputPort {
 		return new ResponseEntity<>(service.registrarCliente(cliente), HttpStatus.CREATED);
 	}
 
-	@Operation(summary = "Buscar um cliente", description ="Retorna os dados de um determinado cliente")
-	@ApiResponse(responseCode = "200")
-	@GetMapping
-	@Override
-	public HttpEntity<Cliente> getClientePor(String cpf) {
-		return new ResponseEntity<>(service.getCliente(cpf), HttpStatus.OK);
-	}
-	
 	@Operation(summary = "Editar um cliente", description ="Deve enviar os dados necessários para alterar o registro de um cliente")
 	@ApiResponse(responseCode = "200", description = "Registro alterado com sucesso")
 	@Override
@@ -58,6 +60,8 @@ public class ClienteController implements ClienteInputPort {
 		return new ResponseEntity<>(service.editarCliente(cliente), HttpStatus.OK);
 	}
 
+	@Operation(summary = "Remover um cliente", description ="Remover um cliente existente")
+	@ApiResponse(responseCode = "204")
 	@DeleteMapping
 	@Override
 	public ResponseEntity<Object> removerCliente(Long id) {
@@ -68,7 +72,8 @@ public class ClienteController implements ClienteInputPort {
 	@Operation(summary = "Retornar todos os clientes (ADM)", description ="Retorna todos os clientes cadastrados")
 	@ApiResponse(responseCode = "200")
 	@Override
+	@GetMapping(path = "/lista")
 	public HttpEntity<List<Cliente>> getTodosOsClientes() {
-		return null;
+		return new ResponseEntity<>(service.getTodosOsClientes(), HttpStatus.OK);
 	}
 }
