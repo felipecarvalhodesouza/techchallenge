@@ -1,10 +1,14 @@
 package br.com.postech.techchallenge.domain.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity(name = "cliente")
 public class Cliente {
@@ -21,6 +25,9 @@ public class Cliente {
 
 	@Column(name = "ds_email")
 	String email;
+
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	List<Pedido> pedidoList;
 
 	public Long getId() {
 		return id;
@@ -54,4 +61,11 @@ public class Cliente {
 		this.email = email;
 	}
 
+	public List<Pedido> getPedidoList() {
+		return pedidoList;
+	}
+
+	public void setPedidoList(List<Pedido> pedidoList) {
+		this.pedidoList = pedidoList;
+	}
 }
