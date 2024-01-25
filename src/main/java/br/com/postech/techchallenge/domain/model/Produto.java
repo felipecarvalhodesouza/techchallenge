@@ -22,8 +22,8 @@ public class Produto {
 	@Enumerated(EnumType.STRING)
 	private TipoProduto tipoProduto;
 
-	@Column(name = "nm_preco")
-	private double preco;
+	@Column(name = "nm_valor")
+	private double valor;
 
 	public Long getId() {
 		return id;
@@ -49,12 +49,12 @@ public class Produto {
 		this.tipoProduto = tipoProduto;
 	}
 
-	public double getPreco() {
-		return preco;
+	public double getValor() {
+		return valor;
 	}
 
-	public void setPreco(double preco) {
-		this.preco = preco;
+	public void setValor(double preco) {
+		this.valor = preco;
 	}
 
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +32,9 @@ public class Pedido {
 
 	@Column(name = "qt_valor_total")
 	private double valorTotal;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private StatusPagamento statusPagamento = StatusPagamento.PENDENTE;
 
 	public Long getId() {
 		return id;
@@ -45,6 +50,10 @@ public class Pedido {
 
 	public void setProdutoList(List<Produto> produtoList) {
 		this.produtoList = produtoList;
+		
+		if (produtoList != null) {
+			produtoList.stream().map(Produto::getValor).forEach(valor -> valorTotal += valor);
+		}
 	}
 
 	
@@ -62,5 +71,13 @@ public class Pedido {
 
 	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+
+	public StatusPagamento getStatusPagamento() {
+		return statusPagamento;
+	}
+
+	public void setStatusPagamento(StatusPagamento statusPagamento) {
+		this.statusPagamento = statusPagamento;
 	}
 }

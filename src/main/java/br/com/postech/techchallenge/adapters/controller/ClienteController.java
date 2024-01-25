@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,15 +57,15 @@ public class ClienteController implements ClienteInputPort {
 	@ApiResponse(responseCode = "200", description = "Registro alterado com sucesso")
 	@Override
 	@PutMapping
-	public HttpEntity<Cliente> editarCliente(Cliente cliente) throws ClienteInexistenteException {
+	public HttpEntity<Cliente> editarCliente(@RequestBody Cliente cliente) throws ClienteInexistenteException {
 		return new ResponseEntity<>(service.editarCliente(cliente), HttpStatus.OK);
 	}
 
 	@Operation(summary = "Remover um cliente", description ="Remover um cliente existente")
 	@ApiResponse(responseCode = "204")
-	@DeleteMapping
+	@DeleteMapping(path = "/{id}")
 	@Override
-	public ResponseEntity<Object> removerCliente(Long id) {
+	public ResponseEntity<Object> removerCliente(@PathVariable Long id) {
 		service.removerCliente(id);
 		return ResponseEntity.noContent().build();
 	}

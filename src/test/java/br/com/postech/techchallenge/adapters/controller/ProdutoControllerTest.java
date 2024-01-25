@@ -34,7 +34,7 @@ class ProdutoControllerTest {
 	@Test
 	void testRegistrarProduto() {
 		produto.setNomeProduto("Coquinha gelada");
-		produto.setPreco(5);
+		produto.setValor(5);
 		produto.setTipoProduto(TipoProduto.BEBIDA);
 
 		produtoController.registrarProduto(produto);

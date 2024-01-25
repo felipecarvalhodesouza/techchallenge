@@ -1,7 +1,7 @@
 -- Inserção de dados de exemplo
 INSERT INTO cliente (ds_nome, ds_email, ds_cpf) values ('Felipe Carvalho de Souza', 'email@provedor.com.br', 12345678909);
 
-INSERT INTO produto (ds_nome_produto, ds_tipo_produto, nm_preco) VALUES
+INSERT INTO produto (ds_nome_produto, ds_tipo_produto, nm_valor) VALUES
     ('X-Bacon', 'LANCHE', 15.99),
     ('Cachorro-Quente', 'LANCHE', 8.99),
     ('Cheeseburger', 'LANCHE', 12.49),
