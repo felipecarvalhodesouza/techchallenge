@@ -30,7 +30,7 @@ services:
       - ./sonarqube/sonarqube_data:/opt/sonarqube/data
       
   goodburguer:
-    image: goodburguer:1.0
+    image: felipecarvalhodesouza/goodburguer:1.0
     ports:
       - "8080:8080"
     networks:
