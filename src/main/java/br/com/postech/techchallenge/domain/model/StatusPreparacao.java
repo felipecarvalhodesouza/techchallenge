@@ -15,13 +15,4 @@ public enum StatusPreparacao {
 	public String getDescricao() {
 		return descricao;
 	}
-	
-	public static StatusPreparacao obterPorDescricao(String descricao) {
-		for (StatusPreparacao valor : StatusPreparacao.values()) {
-			if (valor.getDescricao().equalsIgnoreCase(descricao)) {
-				return valor;
-			}
-		}
-		return null;
-	}
 }

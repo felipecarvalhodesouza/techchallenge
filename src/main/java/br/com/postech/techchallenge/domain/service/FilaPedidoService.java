@@ -19,8 +19,6 @@ public class FilaPedidoService {
 	}
 
 	public List<FilaPedido> getFilaPedido() {
-		List<FilaPedido> filaPedido = port.getFilaPedido();
-		
-		return filaPedido;
+		return port.getFilaPedido();
 	}
 }
