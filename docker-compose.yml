@@ -13,6 +13,8 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+      - techchallenge-network
       
   sonarqube:
     image: sonarqube
@@ -26,6 +28,18 @@ services:
     volumes:
       - ./sonarqube/conf:/opt/sonarqube/conf
       - ./sonarqube/sonarqube_data:/opt/sonarqube/data
+      
+  goodburguer:
+    image: goodburguer:1.0
+    ports:
+      - "8080:8080"
+    networks:
+      - techchallenge-network
+    depends_on:
+      - mysql-db
+  
+networks:
+  techchallenge-network:
 
 volumes:
   mysql-data:
