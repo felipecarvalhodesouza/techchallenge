@@ -25,7 +25,6 @@ class PedidoControllerTest {
 	private ProdutoController produtoController;
 	@Autowired
 	private PedidoController pedidoController;
-	
 
 	@Test
 	void inserirTest() throws PedidoInvalidoException {
@@ -37,12 +36,13 @@ class PedidoControllerTest {
 		Pedido pedido = new Pedido();
 		pedido.setCliente(cliente);
 		
-		assertThrows(PedidoInvalidoException.class, () -> pedidoController.inserir(pedido));
+		assertThrows(PedidoInvalidoException.class, () -> pedidoController.inserir(null, pedido));
 
 		pedido.setProdutoList(produtos);
-		pedidoController.inserir(pedido);
+		pedidoController.inserir(null, pedido);
+		pedidoController.inserir(null, pedido);
 	}
-	
+
 	@Test
 	void getPedidosPorClienteTest() throws PedidoInvalidoException {
 		List<Pedido> pedidos = pedidoController.getPedidosPorCliente(1l).getBody();
@@ -54,11 +54,17 @@ class PedidoControllerTest {
 	
 	@Test
 	void aprovarPagamentoTest() throws StatusPagamentoInvalidoException {
-		pedidoController.aprovarPagamento("1");
+		pedidoController.aprovarPagamento(null, "1");
 		assertEquals(StatusPagamento.APROVADO,
 					 pedidoController.getPedidosPorCliente(1l).getBody().get(0).getStatusPagamento());
 		
-		assertThrows(StatusPagamentoInvalidoException.class, () -> pedidoController.recusarPagamento("1"));
+		assertThrows(StatusPagamentoInvalidoException.class, () -> pedidoController.recusarPagamento(null, "1"));
 	}
-
+	
+	@Test
+	void recusarPagamentoTest() throws StatusPagamentoInvalidoException {
+		pedidoController.recusarPagamento(null, "2");
+		assertEquals(StatusPagamento.RECUSADO,
+					 pedidoController.getPedidosPorCliente(1l).getBody().get(0).getStatusPagamento());
+	}
 }

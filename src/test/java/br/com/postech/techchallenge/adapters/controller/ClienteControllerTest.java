@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,5 +83,11 @@ class ClienteControllerTest {
 	void editarClienteInexistenteTest() {
 		cliente.setId(10l);
 		assertThrows(ClienteInexistenteException.class, () ->  clienteController.editarCliente(cliente));
+	}
+	
+	@Test
+	void getTodosOsClientesTest() {
+		List<Cliente> clientes = clienteController.getTodosOsClientes().getBody();
+		assertEquals(1, clientes.size());
 	}
 }

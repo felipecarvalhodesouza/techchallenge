@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +39,7 @@ public class PedidoController implements PedidoInputPort {
 	@ApiResponse(responseCode = "200")
 	@PostMapping
 	@Override
-	public HttpEntity<Object> inserir(Pedido pedido) throws PedidoInvalidoException {
+	public HttpEntity<Object> inserir(@PathVariable String id, @RequestBody Pedido pedido) throws PedidoInvalidoException {
 		service.inserir(pedido);
 		return ResponseEntity.ok().build();
 	}
@@ -54,7 +55,7 @@ public class PedidoController implements PedidoInputPort {
 	@Operation(summary = "Aprovar pagamento de um pedido")
 	@PutMapping(path = "/{pedidoId}/aprovar")
 	@Override
-	public HttpEntity<Object> aprovarPagamento(String pedidoId) throws StatusPagamentoInvalidoException {
+	public HttpEntity<Object> aprovarPagamento(@PathVariable String id, @PathVariable String pedidoId) throws StatusPagamentoInvalidoException {
 		service.aprovarPagamento(pedidoId);
 		return ResponseEntity.noContent().build();
 	}
@@ -62,7 +63,7 @@ public class PedidoController implements PedidoInputPort {
 	@Operation(summary = "Recusar pagamento de um pedido")
 	@PutMapping(path = "/{pedidoId}/recusar")
 	@Override
-	public HttpEntity<Object> recusarPagamento(String pedidoId) throws StatusPagamentoInvalidoException {
+	public HttpEntity<Object> recusarPagamento(@PathVariable String id, @PathVariable String pedidoId) throws StatusPagamentoInvalidoException {
 		service.recusarPagamento(pedidoId);
 		return ResponseEntity.noContent().build();
 	}

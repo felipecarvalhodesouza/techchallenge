@@ -10,11 +10,11 @@ import br.com.postech.techchallenge.domain.service.exception.StatusPagamentoInva
 
 public interface PedidoInputPort {
 
-	HttpEntity<Object> inserir(Pedido pedido) throws PedidoInvalidoException;
+	HttpEntity<Object> inserir(String clienteId, Pedido pedido) throws PedidoInvalidoException;
 
 	HttpEntity<List<Pedido>> getPedidosPorCliente(long clienteId);
 
-	HttpEntity<Object> aprovarPagamento(String pedidoId) throws StatusPagamentoInvalidoException;
+	HttpEntity<Object> aprovarPagamento(String clienteId, String pedidoId) throws StatusPagamentoInvalidoException;
 
-	HttpEntity<Object> recusarPagamento(String pedidoId) throws StatusPagamentoInvalidoException;
+	HttpEntity<Object> recusarPagamento(String clienteId, String pedidoId) throws StatusPagamentoInvalidoException;
 }
