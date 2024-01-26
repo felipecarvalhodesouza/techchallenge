@@ -40,6 +40,11 @@ public class PedidoService {
 
 	public void aprovarPagamento(String pedidoId) throws StatusPagamentoInvalidoException {
 		Pedido pedido = port.getPedidoPor(Long.valueOf(pedidoId));
+		
+		if(pedido == null) {
+			return;
+		}
+		
 		validarStatusPagamento(pedido);
 		port.aprovarPagamento(pedido);
 		
@@ -50,6 +55,10 @@ public class PedidoService {
 
 	public void recusarPagamento(String pedidoId) throws StatusPagamentoInvalidoException {
 		Pedido pedido = port.getPedidoPor(Long.valueOf(pedidoId));
+		
+		if(pedido == null) {
+			return;
+		}
 		validarStatusPagamento(pedido);
 		port.recusarPagamento(pedido);
 	}
