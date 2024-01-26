@@ -13,7 +13,7 @@ Nessa arquitetura, a camada de domínio, que contém o core da nossa regra de ne
 
  -------- # --------------- #---------------- #-------------------# ---------------------------#-----------------#
 
-Para utilizar a API, é muito simples. Após clonar o projeto, acessar o terminar na pasta raiz e digitar o comando:
+Para utilizar a API, é muito simples. Após clonar o projeto, acessar o terminal na pasta raiz e digitar o comando:
 
  docker compose up -d
 
