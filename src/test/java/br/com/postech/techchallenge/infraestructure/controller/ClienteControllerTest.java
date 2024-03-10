@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import br.com.postech.techchallenge.domain.entity.CPF;
 import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.CpfDuplicadoException;
@@ -33,24 +34,17 @@ class ClienteControllerTest {
     private ClienteController clienteController;
 	
 	@Test
-	void getClienteTest() {
+	void getClienteTest() throws CpfInvalidoException {
 		Cliente cliente = clienteController.getClientePor(String.valueOf(cpf));
 		assertNotNull(cliente);
-		assertEquals(cpf, cliente.getCpf());
+		assertEquals(cpf, Long.valueOf(cliente.getCpf().getDocumento()));
 		assertEquals("email@provedor.com.br", cliente.getEmail());
 		assertEquals("Felipe Carvalho de Souza", cliente.getNome());
 	}
 	
 	@Test
-	void registrarClienteSemCpfTest() throws CpfInvalidoException {
-		cliente.setNome("Benedita Rebeca Lavínia Caldeira");
-		cliente.setEmail("benedita.rebeca.caldeira@tirantea.com.br");
-		assertThrows(CpfInvalidoException.class, () -> clienteController.registrar(cliente));
-	}
-	
-	@Test
 	void registrarClienteDuplicadoTest() throws CpfInvalidoException {
-		cliente.setCpf(cpf);
+		cliente.setCpf(new CPF(cpf));
 		assertThrows(CpfDuplicadoException.class, () -> clienteController.registrar(cliente));
 	}
 	
@@ -58,7 +52,7 @@ class ClienteControllerTest {
 	void registrarClienteTest() throws CpfInvalidoException, CpfDuplicadoException {
 		cliente.setNome("Benedita Rebeca Lavínia Caldeira");
 		cliente.setEmail("benedita.rebeca.caldeira@tirantea.com.br");
-		cliente.setCpf(93159958051l);
+		cliente.setCpf(new CPF(93159958051l));
 		Cliente clienteBanco = clienteController.registrar(cliente);
 		assertNotNull(clienteBanco);
 	}
@@ -66,7 +60,7 @@ class ClienteControllerTest {
 	@Test
 	void editarClienteTest() throws CpfInvalidoException, CpfDuplicadoException, ClienteInexistenteException {
 		cliente.setNome("João");
-		cliente.setCpf(93159958051l);
+		cliente.setCpf(new CPF(93159958051l));
 		cliente.setId(2l);
 		Cliente editarCliente = clienteController.editar(cliente);
 		assertEquals(cliente.getNome(), editarCliente.getNome());

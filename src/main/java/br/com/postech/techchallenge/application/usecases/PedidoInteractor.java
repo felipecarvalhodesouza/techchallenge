@@ -58,6 +58,11 @@ public class PedidoInteractor {
 		validarStatusPagamento(pedido);
 		pedidoGateway.recusarPagamento(pedido);
 	}
+	
+	public StatusPagamento getStatusPagamentoPedido(String pedidoId) throws PedidoInexistenteException {
+		Pedido pedido = pedidoGateway.getPedidoPor(Long.valueOf(pedidoId));
+		return pedido.getStatusPagamento();
+	}
 
 	private void validarStatusPagamento(Pedido pedido) throws StatusPagamentoInvalidoException {
 		if(pedido.getStatusPagamento() != StatusPagamento.PENDENTE) {

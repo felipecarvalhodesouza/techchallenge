@@ -59,4 +59,11 @@ public class PedidoController {
 	public void recusarPagamento(@PathVariable String id, @PathVariable String pedidoId) throws StatusPagamentoInvalidoException, NumberFormatException, PedidoInexistenteException {
 		pedidoInteractor.recusarPagamento(pedidoId);
 	}
+	
+	@Operation(summary = "Consultar o status do pagamento de um pedido")
+	@PutMapping(path = "/{pedidoId}/statusPagamento")
+	@ApiResponse(responseCode = "200")
+	public String getStatusPagamentoPedido(@PathVariable String id, @PathVariable String pedidoId) throws StatusPagamentoInvalidoException, NumberFormatException, PedidoInexistenteException {
+		return pedidoInteractor.getStatusPagamentoPedido(pedidoId).getDescricao();
+	}
 }

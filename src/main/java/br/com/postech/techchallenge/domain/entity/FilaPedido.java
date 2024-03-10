@@ -2,7 +2,7 @@ package br.com.postech.techchallenge.domain.entity;
 
 import br.com.postech.techchallenge.domain.entity.enumeration.StatusPreparacao;
 
-public class FilaPedido {
+public class FilaPedido implements Comparable<FilaPedido> {
 
 	private Long id;
 	private Pedido pedido;
@@ -34,6 +34,27 @@ public class FilaPedido {
 
 	public void setStatus(StatusPreparacao status) {
 		this.status = status;
+	}
+
+	@Override
+	public int compareTo(FilaPedido o) {
+		if(this.status == o.getStatus()) {
+			return Long.valueOf(getCodigoPedido()).compareTo(Long.valueOf(o.getCodigoPedido())) * -1;
+		}
+
+		if(status == StatusPreparacao.FINALIZADO || o.getStatus() == StatusPreparacao.PRONTO) {
+			return -1;
+		}
+
+		if(o.getStatus() == StatusPreparacao.FINALIZADO || status == StatusPreparacao.PRONTO) {
+			return 1;
+		}
+
+		if(status == StatusPreparacao.EM_PREPARACAO && o.getStatus() == StatusPreparacao.RECEBIDO) {
+			return 1;
+		}
+
+		return -1;
 	}
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.postech.techchallenge.application.usecases.ClienteInteractor;
+import br.com.postech.techchallenge.domain.entity.CPF;
 import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.CpfDuplicadoException;
@@ -34,16 +35,16 @@ public class ClienteController {
 	@Operation(summary = "Buscar um cliente", description ="Retorna os dados de um determinado cliente")
 	@ApiResponse(responseCode = "200")
 	@GetMapping
-	public Cliente getClientePor(String cpf) {
+	public Cliente getClientePor(String cpf) throws CpfInvalidoException {
 		Cliente cliente = new Cliente();
-		cliente.setCpf(Long.valueOf(cpf));
+		cliente.setCpf(new CPF(cpf));
 		return clienteInteractor.buscar(cliente);
 	}
 
 	@Operation(summary = "Registrar um cliente", description ="Deve enviar os dados necessários para guardar um cliente no sistema")
 	@ApiResponse(responseCode = "201", description = "Cliente registrado com sucesso")
 	@PostMapping
-	public Cliente registrar(@RequestBody Cliente cliente) throws CpfInvalidoException, CpfDuplicadoException {
+	public Cliente registrar(@RequestBody Cliente cliente) throws CpfDuplicadoException {
 		return clienteInteractor.registrar(cliente);
 	}
 

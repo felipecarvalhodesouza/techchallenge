@@ -6,8 +6,6 @@ import br.com.postech.techchallenge.application.gateway.ClienteGateway;
 import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.CpfDuplicadoException;
-import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
-import br.com.postech.techchallenge.domain.util.ValidadorCPF;
 
 public class ClienteInteractor {
 
@@ -25,10 +23,7 @@ public class ClienteInteractor {
 		return clienteGateway.buscarPor(id);
 	}
 	
-	public Cliente registrar(Cliente cliente) throws CpfInvalidoException, CpfDuplicadoException {
-		if (!ValidadorCPF.validarCPF(String.valueOf(cliente.getCpf()))) {
-			throw new CpfInvalidoException();
-		}
+	public Cliente registrar(Cliente cliente) throws CpfDuplicadoException {
 
 		if (clienteGateway.buscarPorCpf(cliente) != null) {
 			throw new CpfDuplicadoException();

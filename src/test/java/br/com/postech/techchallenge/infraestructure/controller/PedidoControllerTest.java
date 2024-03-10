@@ -16,6 +16,7 @@ import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.Pedido;
 import br.com.postech.techchallenge.domain.entity.Produto;
 import br.com.postech.techchallenge.domain.entity.enumeration.StatusPagamento;
+import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
 import br.com.postech.techchallenge.domain.entity.exception.PedidoInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.PedidoInvalidoException;
 import br.com.postech.techchallenge.domain.entity.exception.StatusPagamentoInvalidoException;
@@ -35,7 +36,7 @@ class PedidoControllerTest {
 	private PedidoController pedidoController;
 
 	@Test @Order(1)
-	void inserirTest() throws PedidoInvalidoException {
+	void inserirTest() throws PedidoInvalidoException, CpfInvalidoException {
 		
 		Cliente cliente = clienteController.getClientePor("12345678909");
 		List<Produto> produtos = produtoController.getTodosOsProdutos();
@@ -76,5 +77,11 @@ class PedidoControllerTest {
 		pedidoController.recusarPagamento(null, "2");
 		assertEquals(StatusPagamento.RECUSADO,
 					 pedidoController.getPedidosPorCliente(1l).get(1).getStatusPagamento());
+	}
+	
+	@Test  @Order(5)
+	void getStatusPagamentoTest() throws StatusPagamentoInvalidoException, NumberFormatException, PedidoInexistenteException {
+		String statusPagamentoPedido = pedidoController.getStatusPagamentoPedido(null, "2");
+		assertEquals(StatusPagamento.RECUSADO.getDescricao(), statusPagamentoPedido);
 	}
 }

@@ -2,11 +2,13 @@ package br.com.postech.techchallenge.domain.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Cliente {
 
 	private Long id;
 	private String nome;
-	private long cpf;
+	private CPF cpf;
 	private String email;
 	private List<Pedido> pedidoList;
 
@@ -26,11 +28,16 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public long getCpf() {
+	@JsonIgnore
+	public CPF getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(long cpf) {
+	public String getNumeroCpf() {
+		return cpf.getDocumento();
+	}
+
+	public void setCpf(CPF cpf) {
 		this.cpf = cpf;
 	}
 
