@@ -33,6 +33,9 @@ spec:
             secretKeyRef:
               name: mysql-db-secret
               key: DATABASE_PASSWORD
+        resources:
+          requests:
+            cpu: "100m"
 ---
 apiVersion: v1
 kind: Service
