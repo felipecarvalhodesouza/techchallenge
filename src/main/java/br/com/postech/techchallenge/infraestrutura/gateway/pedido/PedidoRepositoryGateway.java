@@ -54,4 +54,11 @@ public class PedidoRepositoryGateway implements PedidoGateway{
 		PedidoEntity entity = pedidoRepository.findById(pedidoId).orElseThrow(() -> new PedidoInexistenteException());
 		return mapper.toDomainObject(entity);
 	}
+
+	@Override
+	@Transactional
+	public String getStatusPedido(long pedidoId) throws PedidoInexistenteException {
+		PedidoEntity entity = pedidoRepository.findById(pedidoId).orElseThrow(() -> new PedidoInexistenteException());
+		return entity.getStatusPagamento().getDescricao();
+	}
 }

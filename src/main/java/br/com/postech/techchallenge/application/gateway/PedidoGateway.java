@@ -18,4 +18,6 @@ public interface PedidoGateway {
 	void recusarPagamento(Pedido pedido) throws StatusPagamentoInvalidoException;
 
 	Pedido getPedidoPor(long pedidoId) throws PedidoInexistenteException;
+	
+	String getStatusPedido(long pedidoId) throws PedidoInexistenteException;
 }
