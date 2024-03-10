@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-db-config
+data:
+  DATABASE_URL: jdbc:mysql://mysql-db-service:3306/goodburguer
+  MYSQL_DATABASE: goodburguer

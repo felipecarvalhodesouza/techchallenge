@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goodburguer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goodburguer
+  template:
+    metadata:
+      labels:
+        app: goodburguer
+    spec:
+      containers:
+      - name: goodburguer
+        image: felipecarvalhodesouza/goodburguer:2.0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-db-config
+              key: DATABASE_URL
+        - name: DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mysql-db-secret
+              key: DATABASE_USERNAME
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-db-secret
+              key: DATABASE_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goodburguer-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: goodburguer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goordburger-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: goodburger
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
