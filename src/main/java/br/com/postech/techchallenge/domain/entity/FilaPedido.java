@@ -1,10 +1,13 @@
 package br.com.postech.techchallenge.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.postech.techchallenge.domain.entity.enumeration.StatusPreparacao;
 
 public class FilaPedido implements Comparable<FilaPedido> {
 
 	private Long id;
+	@JsonIgnore
 	private Pedido pedido;
 	private StatusPreparacao status = StatusPreparacao.RECEBIDO;
 

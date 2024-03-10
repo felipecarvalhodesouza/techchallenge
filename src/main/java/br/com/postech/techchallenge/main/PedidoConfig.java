@@ -3,6 +3,7 @@ package br.com.postech.techchallenge.main;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import br.com.postech.techchallenge.application.gateway.ClienteGateway;
 import br.com.postech.techchallenge.application.gateway.FilaPedidoGateway;
 import br.com.postech.techchallenge.application.gateway.PedidoGateway;
 import br.com.postech.techchallenge.application.usecases.PedidoInteractor;
@@ -14,8 +15,8 @@ import br.com.postech.techchallenge.infraestrutura.persistence.pedido.PedidoRepo
 public class PedidoConfig {
 
 	@Bean
-	PedidoInteractor createPedidoUseCase(PedidoGateway PedidoGateway, FilaPedidoGateway filaPedidoGateway) {
-		return new PedidoInteractor(PedidoGateway, filaPedidoGateway);
+	PedidoInteractor createPedidoUseCase(PedidoGateway PedidoGateway, FilaPedidoGateway filaPedidoGateway,  ClienteGateway clienteGateway) {
+		return new PedidoInteractor(PedidoGateway, filaPedidoGateway, clienteGateway);
 	}
 
 	@Bean

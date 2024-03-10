@@ -18,7 +18,7 @@ class FilaPedidoControllerTest {
 
 	@Test
 	void testAvancarPedido() throws NumberFormatException, StatusPagamentoInvalidoException, PedidoInexistenteException {
-		filaPedidoController.avancarPedido(null, "1");
+		filaPedidoController.avancarPedido("1");
 		assertEquals(StatusPreparacao.EM_PREPARACAO, filaPedidoController.buscarPedido("1").getStatus());
 	}
 

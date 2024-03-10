@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.postech.techchallenge.application.usecases.PedidoInteractor;
 import br.com.postech.techchallenge.domain.entity.Pedido;
+import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.PedidoInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.PedidoInvalidoException;
 import br.com.postech.techchallenge.domain.entity.exception.StatusPagamentoInvalidoException;
@@ -35,7 +36,7 @@ public class PedidoController {
 	@Operation(summary = "Inserir um pedido")
 	@ApiResponse(responseCode = "200")
 	@PostMapping
-	public Pedido inserir(@PathVariable String id, @RequestBody Pedido pedido) throws PedidoInvalidoException {
+	public Pedido inserir(@PathVariable String id, @RequestBody Pedido pedido) throws PedidoInvalidoException, ClienteInexistenteException {
 		return pedidoInteractor.inserir(pedido);
 	}
 

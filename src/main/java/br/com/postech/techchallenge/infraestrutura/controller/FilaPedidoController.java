@@ -39,9 +39,9 @@ public class FilaPedidoController {
 	}
 
 	@Operation(summary = "Avancar o status de preparação de um pedido da fila")
-	@PutMapping(path = "clientes/{id}/{pedidoId}/avancar")
+	@PutMapping(path = "/{pedidoId}/avancar")
 	@ApiResponse(responseCode = "200")
-	public void avancarPedido(@PathVariable String id, @PathVariable String pedidoId) throws PedidoInexistenteException {
+	public void avancarPedido(@PathVariable String pedidoId) throws PedidoInexistenteException {
 		filaPedidoInteractor.avancarPedido(pedidoId);
 	}
 }

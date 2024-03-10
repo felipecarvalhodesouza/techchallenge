@@ -2,8 +2,6 @@ package br.com.postech.techchallenge.domain.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class Cliente {
 
 	private Long id;
@@ -28,7 +26,6 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	@JsonIgnore
 	public CPF getCpf() {
 		return cpf;
 	}

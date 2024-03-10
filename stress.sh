@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ENDPOINT="http://localhost:8080/swagger-ui/index.html"
+ENDPOINT="http://localhost:8080/produtos/lista"
 
 NUM_REQUESTS=1000
 

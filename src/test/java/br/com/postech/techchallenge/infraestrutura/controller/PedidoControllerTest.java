@@ -16,6 +16,7 @@ import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.Pedido;
 import br.com.postech.techchallenge.domain.entity.Produto;
 import br.com.postech.techchallenge.domain.entity.enumeration.StatusPagamento;
+import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
 import br.com.postech.techchallenge.domain.entity.exception.PedidoInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.PedidoInvalidoException;
@@ -33,7 +34,7 @@ class PedidoControllerTest {
 	private PedidoController pedidoController;
 
 	@Test @Order(1)
-	void inserirTest() throws PedidoInvalidoException, CpfInvalidoException {
+	void inserirTest() throws PedidoInvalidoException, CpfInvalidoException, ClienteInexistenteException {
 		
 		Cliente cliente = clienteController.getClientePor("12345678909");
 		List<Produto> produtos = produtoController.getTodosOsProdutos();
