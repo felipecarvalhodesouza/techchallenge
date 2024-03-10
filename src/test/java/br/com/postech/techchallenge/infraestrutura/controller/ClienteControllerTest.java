@@ -1,4 +1,4 @@
-package br.com.postech.techchallenge.infraestructure.controller;
+package br.com.postech.techchallenge.infraestrutura.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,7 +17,6 @@ import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.CpfDuplicadoException;
 import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
-import br.com.postech.techchallenge.infraestrutura.controller.ClienteController;
 
 @SpringBootTest
 class ClienteControllerTest {

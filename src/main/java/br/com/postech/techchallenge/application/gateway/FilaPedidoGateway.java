@@ -9,5 +9,8 @@ public interface FilaPedidoGateway {
 	List<FilaPedido> getFilaPedido();
 
 	void enviaPara(FilaPedido filaPedido);
-
+	
+	FilaPedido getFilaPedidoPor(long id);
+	
+	FilaPedido editar(FilaPedido filaPedido);
 }

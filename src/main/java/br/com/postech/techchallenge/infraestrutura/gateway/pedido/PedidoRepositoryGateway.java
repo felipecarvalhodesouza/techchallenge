@@ -50,9 +50,8 @@ public class PedidoRepositoryGateway implements PedidoGateway{
 
 	@Override
 	@Transactional
-	public Pedido getPedidoPor(Long pedidoId) throws PedidoInexistenteException {
+	public Pedido getPedidoPor(long pedidoId) throws PedidoInexistenteException {
 		PedidoEntity entity = pedidoRepository.findById(pedidoId).orElseThrow(() -> new PedidoInexistenteException());
 		return mapper.toDomainObject(entity);
 	}
-
 }

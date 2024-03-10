@@ -17,5 +17,5 @@ public interface PedidoGateway {
 
 	void recusarPagamento(Pedido pedido) throws StatusPagamentoInvalidoException;
 
-	Pedido getPedidoPor(Long pedidoId) throws PedidoInexistenteException;
+	Pedido getPedidoPor(long pedidoId) throws PedidoInexistenteException;
 }

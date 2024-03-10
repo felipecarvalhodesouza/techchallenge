@@ -1,4 +1,4 @@
-package br.com.postech.techchallenge.infraestructure.controller;
+package br.com.postech.techchallenge.infraestrutura.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,9 +20,6 @@ import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException
 import br.com.postech.techchallenge.domain.entity.exception.PedidoInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.PedidoInvalidoException;
 import br.com.postech.techchallenge.domain.entity.exception.StatusPagamentoInvalidoException;
-import br.com.postech.techchallenge.infraestrutura.controller.ClienteController;
-import br.com.postech.techchallenge.infraestrutura.controller.PedidoController;
-import br.com.postech.techchallenge.infraestrutura.controller.ProdutoController;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

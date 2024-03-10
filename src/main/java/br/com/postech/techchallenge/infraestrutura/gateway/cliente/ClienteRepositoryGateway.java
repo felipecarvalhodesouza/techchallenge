@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import br.com.postech.techchallenge.application.gateway.ClienteGateway;
 import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
-import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
 import br.com.postech.techchallenge.infraestrutura.persistence.cliente.ClienteEntity;
 import br.com.postech.techchallenge.infraestrutura.persistence.cliente.ClienteRepository;
 

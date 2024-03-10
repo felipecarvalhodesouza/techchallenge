@@ -9,5 +9,7 @@ public interface FilaPedidoRepository extends JpaRepository<FilaPedidoEntity, Lo
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM fila_pedido f WHERE f.status <> 'FINALIZADO'")
 	public List<FilaPedidoEntity> getFilaPedido();
+	
+	public FilaPedidoEntity findByPedidoId(long id);
 
 }

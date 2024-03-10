@@ -16,7 +16,7 @@ import br.com.postech.techchallenge.infraestrutura.persistence.produto.ProdutoEn
 
 public class PedidoEntityMapper {
 
-	PedidoEntity toEntity(Pedido pedidoDomain) {
+	public PedidoEntity toEntity(Pedido pedidoDomain) {
 		PedidoEntity entity = new PedidoEntity();
 		BeanUtils.copyProperties(pedidoDomain, entity);
 
@@ -35,7 +35,7 @@ public class PedidoEntityMapper {
 		return entity;
 	}
 
-	Pedido toDomainObject(PedidoEntity entity) {
+	public Pedido toDomainObject(PedidoEntity entity) {
 		Pedido pedido = new Pedido();
 		BeanUtils.copyProperties(entity, pedido);
 

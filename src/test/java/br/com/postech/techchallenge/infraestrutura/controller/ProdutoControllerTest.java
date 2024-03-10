@@ -1,4 +1,4 @@
-package br.com.postech.techchallenge.infraestructure.controller;
+package br.com.postech.techchallenge.infraestrutura.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.postech.techchallenge.domain.entity.Produto;
 import br.com.postech.techchallenge.domain.entity.enumeration.TipoProduto;
-import br.com.postech.techchallenge.infraestrutura.controller.ProdutoController;
 
 @SpringBootTest
 class ProdutoControllerTest {
