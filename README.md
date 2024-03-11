@@ -1,34 +1,32 @@
-# Esse projeto é o artefato do primeiro tech challenge da Pós Tech da FIAP para o curso de Software Archtecture #
+# Esse projeto é o artefato do segundo tech challenge da Pós Tech da FIAP para o curso de Software Archtecture #
 
 O objetivo é a criaçao de uma API para um sistema de auto atendimento de uma lanchonete.
-Os fluxos criados na API para a primeira fazem consistem em:
+Os fluxos da API consistem em:
  * Cadastro/identificação de Clientes
  * CRUD e listagem de Produtos
- * CRUD de Pedidos (com pagamento Fake)
- * Listagem da Fila de Pedidos
+ * CRUD de Pedidos (sem integração com métodos de pagamentos, por hora)
+ * Consulta do status de pagamento de um pedido
+ * Listagem da Fila de Pedidos de acordo com o status, e avanço de status de preparação.
+   
+![image](https://github.com/felipecarvalhodesouza/techchallenge/assets/36648569/bd8b1d68-4428-4ff1-880c-649fb2cfa91a)
 
-O projeto utilizou os conceitos de arquitetura hexagonal (portas e adaptadores), criando interfaces que são usadas pelas camadas de controladores e persistência para 
-desacoplar ao máximo a implementação das abstração.
-Nessa arquitetura, a camada de domínio, que contém o core da nossa regra de negócio, está separada e independente da escolha de implementação de tecnologias.
+O projeto foi pensado para execução em um cluster kubernetes, considerando a escalabilidade de acordo com o processamento de CPU.
+De acordo com a atual implementação, os deployments onde a aplicação está rodando são escaláveis, e possuem um load balancer para organização das requisições entre instâncias.
+Dentro do cluster, a aplicação se comunica com um deployment responsável pelo repositório de dados, que não possui implementação de escalabidade.
 
- -------- # --------------- #---------------- #-------------------# ---------------------------#-----------------#
+O projeto foi implementado considerando os funcionamentos da arquitetura limpa, onde a regra de negócio, isto é, os casos de usos e entidades estão desacoplados da implementação de frameworks e linguagem, bem como entidades externas, como banco de dados.
+É possível realizar manutenção sem risco de quebrar a aplicação, pois o desenvolvimento é voltado a interfaces, seguindo todos os princípios de SOLID.
 
-Para utilizar a API, é muito simples. Após clonar o projeto, acessar o terminal na pasta raiz e digitar o comando:
-
- docker compose up -d
-
- Dessa maneira, o docker compose já realizará todo o trabalho para subir o ambiente de desenvolvimento.
-
- É possível acessar a documentação do projeto no link:
+Passos para execução do projeto:
+1 - Realizar o clone do projeto, para que os arquivos manifesto estejam disponíveis (pasta kubernetes).
+2 - Dentro da raiz do projeto, abrir um terminal e executar os comandos na seguinte ordem:
+   kubectl apply -f .\kubernetes\mysql-db-config.yaml
+   kubectl apply -f .\kubernetes\mysql-db-secret.yaml
+   kubectl apply -f .\kubernetes\mysql-db.yaml
+   kubectl apply -f .\kubernetes\components.yaml (opcional se já houver um deployment de metrics-server no kube-system)
+   kubectl apply -f .\kubernetes\goodburguer-hpa.yaml
+   kubectl apply -f .\kubernetes\goodburguer.yaml
+3 - Com os deployments devidamente em funcionamento, será possível acessar a API localmente. É possível acessar a documentação do projeto no link:
  http://localhost:8080/swagger-ui/index.html#/
-
- Para testar a API de uma maneira facilitada, acessar o seguinte Postman (necessáro utilizar o Desktop):
+4 - Caso a utilização do Postman seja preferível, é possível baixar as Collections necessárias no link abaixo (necessário utilização do Postman Desktop por se tratar de chamadas locais) :
  https://www.postman.com/felipe-carvalho-de-souza/workspace/techchallenge-fiap-ps-tech/overview
-
- Para acessar os reports relacionados a qualidade de código e testabilidade, acessar o SonarQube acoplado ao projeto:
- http://localhost:9000/projects
-
- O projeto foi desenvolvido pensando nos pilares da arquitetura de um software, considerando escalabilidade, manutenção, testabilidade, monitoramento.
- O projeto possui actuator acoplado no link: #TODO de interface gráfica
- http://localhost:8080/actuator
- http://localhost:8080/actuator/health
