@@ -8,8 +8,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 
 @Entity(name = "produto")
+@Table(indexes = {@Index(name = "idx_ds_nome_produto", columnList="ds_nome_produto", unique = true)})
 public class ProdutoEntity {
 
 	@Id
