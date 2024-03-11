@@ -17,16 +17,18 @@ Dentro do cluster, a aplicação se comunica com um deployment responsável pelo
 O projeto foi implementado considerando os funcionamentos da arquitetura limpa, onde a regra de negócio, isto é, os casos de usos e entidades estão desacoplados da implementação de frameworks e linguagem, bem como entidades externas, como banco de dados.
 É possível realizar manutenção sem risco de quebrar a aplicação, pois o desenvolvimento é voltado a interfaces, seguindo todos os princípios de SOLID.
 
+Como a origem do projeto era um Spring Boot, que usa muito dos conceitos MVC, o desafio foi desacoplar o projeto do framework, principalmente nas questões relacionadas a entidades, pois o Spring Data acopla muito as entidades do domínio com as entidades do banco de dados.
+
 Passos para execução do projeto:
-1 - Realizar o clone do projeto, para que os arquivos manifesto estejam disponíveis (pasta kubernetes).
-2 - Dentro da raiz do projeto, abrir um terminal e executar os comandos na seguinte ordem:
-   kubectl apply -f .\kubernetes\mysql-db-config.yaml
-   kubectl apply -f .\kubernetes\mysql-db-secret.yaml
-   kubectl apply -f .\kubernetes\mysql-db.yaml
-   kubectl apply -f .\kubernetes\components.yaml (opcional se já houver um deployment de metrics-server no kube-system)
-   kubectl apply -f .\kubernetes\goodburguer-hpa.yaml
-   kubectl apply -f .\kubernetes\goodburguer.yaml
-3 - Com os deployments devidamente em funcionamento, será possível acessar a API localmente. É possível acessar a documentação do projeto no link:
+* 1 - Realizar o clone do projeto, para que os arquivos manifesto estejam disponíveis (pasta kubernetes).
+* 2 - Dentro da raiz do projeto, abrir um terminal e executar os comandos na seguinte ordem:
+   * kubectl apply -f .\kubernetes\mysql-db-config.yaml
+   * kubectl apply -f .\kubernetes\mysql-db-secret.yaml
+   * kubectl apply -f .\kubernetes\mysql-db.yaml
+   * kubectl apply -f .\kubernetes\components.yaml (opcional se já houver um deployment de metrics-server no kube-system)
+   * kubectl apply -f .\kubernetes\goodburguer-hpa.yaml
+   * kubectl apply -f .\kubernetes\goodburguer.yaml
+* 3 - Com os deployments devidamente em funcionamento, será possível acessar a API localmente. É possível acessar a documentação do projeto no link:
  http://localhost:8080/swagger-ui/index.html#/
-4 - Caso a utilização do Postman seja preferível, é possível baixar as Collections necessárias no link abaixo (necessário utilização do Postman Desktop por se tratar de chamadas locais) :
+* 4 - Caso a utilização do Postman seja preferível, é possível baixar as Collections necessárias no link abaixo (necessário utilização do Postman Desktop por se tratar de chamadas locais) :
  https://www.postman.com/felipe-carvalho-de-souza/workspace/techchallenge-fiap-ps-tech/overview
