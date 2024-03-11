@@ -32,3 +32,5 @@ Passos para execução do projeto:
  http://localhost:8080/swagger-ui/index.html#/
 * 4 - Caso a utilização do Postman seja preferível, é possível baixar as Collections necessárias no link abaixo (necessário utilização do Postman Desktop por se tratar de chamadas locais) :
  https://www.postman.com/felipe-carvalho-de-souza/workspace/techchallenge-fiap-ps-tech/overview
+* 5 - Video com a apresentação da arquitetura Kubernetes:
+   * https://youtu.be/eMywqzE6Dvs 
