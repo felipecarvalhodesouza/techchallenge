@@ -79,3 +79,13 @@ jobs:
         run: mvn package
         env:
           LOG_LEVEL: 'error'
+
+  image:
+    runs-on: ubuntu-latest
+    needs: [package]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t felipecarvalhodesouza/goodburguer:latest .
