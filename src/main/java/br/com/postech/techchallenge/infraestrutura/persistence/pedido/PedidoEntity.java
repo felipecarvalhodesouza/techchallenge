@@ -4,7 +4,9 @@ import java.util.List;
 
 import br.com.postech.techchallenge.domain.entity.enumeration.StatusPagamento;
 import br.com.postech.techchallenge.infraestrutura.persistence.cliente.ClienteEntity;
+import br.com.postech.techchallenge.infraestrutura.persistence.filapedido.FilaPedidoEntity;
 import br.com.postech.techchallenge.infraestrutura.persistence.produto.ProdutoEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity(name = "pedido")
 public class PedidoEntity {
@@ -38,6 +41,9 @@ public class PedidoEntity {
 	
 	@Enumerated(EnumType.ORDINAL)
 	private StatusPagamento statusPagamento = StatusPagamento.PENDENTE;
+	
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.REMOVE, optional = true)
+    private FilaPedidoEntity filaPedido;
 
 	public Long getId() {
 		return id;
@@ -82,5 +88,13 @@ public class PedidoEntity {
 
 	public void setStatusPagamento(StatusPagamento statusPagamento) {
 		this.statusPagamento = statusPagamento;
+	}
+
+	public FilaPedidoEntity getFilaPedido() {
+		return filaPedido;
+	}
+
+	public void setFilaPedido(FilaPedidoEntity filaPedido) {
+		this.filaPedido = filaPedido;
 	}
 }

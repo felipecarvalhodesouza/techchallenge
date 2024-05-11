@@ -17,7 +17,7 @@ import br.com.postech.techchallenge.infraestrutura.controller.FilaPedidoControll
 import br.com.postech.techchallenge.main.FilaPedidoConfig;
 
 @SpringBootTest(classes = {TechchallengeApplication.class, FilaPedidoConfig.class})
-class FilaPedidoControllerTest {
+class ZFilaPedidoControllerTest {
 	
 	@Autowired
 	private FilaPedidoController filaPedidoController;

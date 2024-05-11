@@ -10,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity(name = "fila_pedido")
@@ -22,6 +23,7 @@ public class FilaPedidoEntity {
 
 	@OneToOne
 	@JsonIgnore
+	@JoinColumn(name = "pedido_id")
 	private PedidoEntity pedido;
 
 	@Enumerated(EnumType.STRING)
