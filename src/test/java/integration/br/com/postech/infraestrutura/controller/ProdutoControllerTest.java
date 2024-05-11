@@ -1,4 +1,4 @@
-package br.com.postech.techchallenge.infraestrutura.controller;
+package integration.br.com.postech.infraestrutura.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,18 +10,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import br.com.postech.techchallenge.TechchallengeApplication;
 import br.com.postech.techchallenge.domain.entity.Produto;
 import br.com.postech.techchallenge.domain.entity.enumeration.TipoProduto;
+import br.com.postech.techchallenge.infraestrutura.controller.ProdutoController;
+import br.com.postech.techchallenge.main.ProdutoConfig;
 
-@SpringBootTest
+@SpringBootTest(classes = {TechchallengeApplication.class, ProdutoConfig.class})
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProdutoControllerTest {
 
 	private Produto produto;
-	private Long idProdutoIncluido = 19l;
 
 	@Autowired
 	private ProdutoController produtoController;
@@ -31,40 +37,44 @@ class ProdutoControllerTest {
 		produto = new Produto();
 	}
 
-	@Test
+	@Test @Order(1)
 	void testRegistrarProduto() {
 		produto.setNomeProduto("Coquinha gelada");
 		produto.setValor(5);
 		produto.setTipoProduto(TipoProduto.BEBIDA);
 
-		produtoController.registrar(produto);
+		Produto produtoInserido = produtoController.registrar(produto);
 
-		assertNotNull(idProdutoIncluido);
-		assertNotEquals(0, idProdutoIncluido);
+		assertNotNull(produtoInserido.getId());
+		assertNotEquals(0, produtoInserido.getId());
 	}
 
-	@Test
+	@Test @Order(2)
 	void testEditarProduto() {
-		produto.setId(idProdutoIncluido);
+		Produto produtoInserido = produtoController.getProdutoPorNome("Coquinha gelada");
+		
+		produto.setId(produtoInserido.getId());
 		produto.setNomeProduto("Pepsi");
 
 		produtoController.editar(produto);
 
-		List<Produto> collect = getProdutoPorId(idProdutoIncluido);
+		List<Produto> collect = getProdutoPorId(produtoInserido.getId());
 
 		assertEquals(1, collect.size());
 		assertEquals("Pepsi", collect.get(0).getNomeProduto());
 	}
 
-	@Test
+	@Test @Order(3)
 	void testRemoverProduto() {
-		produtoController.removerProduto(idProdutoIncluido - 1);
+		Produto produtoInserido = produtoController.getProdutoPorNome("Pepsi");
 		
-		List<Produto> collect = getProdutoPorId(idProdutoIncluido - 1);
+		produtoController.removerProduto(produtoInserido.getId());
+		
+		List<Produto> collect = getProdutoPorId(produtoInserido.getId());
 		assertEquals(0, collect.size());
 	}
 
-	@Test
+	@Test @Order(4)
 	void testGetTodosOsProdutosPor() {
 		List<Produto> todosOsProdutosPor = produtoController.getTodosOsProdutosPor("bebida");
 		

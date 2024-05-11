@@ -1,5 +1,6 @@
 package br.com.postech.techchallenge.infraestrutura.gateway.produto;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,5 +51,15 @@ public class ProdutoRepositoryGateway implements ProdutoGateway{
 								.stream()
 								.map( entity -> mapper.toDomainObject(entity))
 								.collect(Collectors.toList());
+	}
+
+	@Override
+	public Produto getProdutoPorNome(String nomeProduto) {
+		List<ProdutoEntity> list = produtoRepository.getByNomeProduto(nomeProduto);
+		
+		if(list.isEmpty()) {
+			return null;
+		}
+		return mapper.toDomainObject(list.get(0));
 	}
 }

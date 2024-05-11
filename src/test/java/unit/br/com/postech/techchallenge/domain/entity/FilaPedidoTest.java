@@ -1,9 +1,11 @@
-package br.com.postech.techchallenge.domain.entity;
+package unit.br.com.postech.techchallenge.domain.entity;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import br.com.postech.techchallenge.domain.entity.FilaPedido;
+import br.com.postech.techchallenge.domain.entity.Pedido;
 import br.com.postech.techchallenge.domain.entity.enumeration.StatusPreparacao;
 
 class FilaPedidoTest {

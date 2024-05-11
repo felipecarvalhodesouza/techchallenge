@@ -1,4 +1,4 @@
-package br.com.postech.techchallenge.infraestrutura.controller;
+package integration.br.com.postech.infraestrutura.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,13 +12,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import br.com.postech.techchallenge.TechchallengeApplication;
 import br.com.postech.techchallenge.domain.entity.CPF;
 import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.CpfDuplicadoException;
 import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
+import br.com.postech.techchallenge.infraestrutura.controller.ClienteController;
+import br.com.postech.techchallenge.main.ClienteConfig;
 
-@SpringBootTest
+@SpringBootTest(classes = {TechchallengeApplication.class, ClienteConfig.class})
 class ClienteControllerTest {
 
 	private static final Long cpf = 12345678909l;
@@ -60,14 +63,14 @@ class ClienteControllerTest {
 	void editarClienteTest() throws CpfInvalidoException, CpfDuplicadoException, ClienteInexistenteException {
 		cliente.setNome("João");
 		cliente.setCpf(new CPF(93159958051l));
-		cliente.setId(2l);
+		cliente.setId(clienteController.getClientePor("93159958051").getId());
 		Cliente editarCliente = clienteController.editar(cliente);
 		assertEquals(cliente.getNome(), editarCliente.getNome());
 	}
 	
 	@Test
 	void removerClienteTest() throws CpfInvalidoException, CpfDuplicadoException, ClienteInexistenteException {
-		clienteController.removerCliente(2l);
+		clienteController.removerCliente(clienteController.getClientePor("93159958051").getId());
 		Cliente clienteBanco = clienteController.getClientePor(String.valueOf(93159958051l));
 		assertNull(clienteBanco);
 	}

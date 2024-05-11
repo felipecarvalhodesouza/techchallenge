@@ -3,6 +3,7 @@ package br.com.postech.techchallenge.infraestrutura.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,5 +67,12 @@ public class PedidoController {
 	@ApiResponse(responseCode = "200")
 	public String getStatusPagamentoPedido(@PathVariable String id, @PathVariable String pedidoId) throws StatusPagamentoInvalidoException, NumberFormatException, PedidoInexistenteException {
 		return pedidoInteractor.getStatusPagamentoPedido(pedidoId);
+	}
+	
+	@Operation(summary = "Excluir um pedido - Utilizado para testes de integração")
+	@ApiResponse(responseCode = "200")
+	@DeleteMapping
+	public void delete(@PathVariable String id, @RequestBody Pedido pedido) throws PedidoInexistenteException {
+		pedidoInteractor.delete(pedido);
 	}
 }

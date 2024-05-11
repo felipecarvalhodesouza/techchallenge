@@ -74,4 +74,8 @@ public class PedidoInteractor {
 			throw new StatusPagamentoInvalidoException();
 		}
 	}
+
+	public void delete(Pedido pedido) throws PedidoInexistenteException {
+		pedidoGateway.excluir(pedido.getId());;
+	}
 }

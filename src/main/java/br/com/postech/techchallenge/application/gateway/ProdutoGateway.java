@@ -16,4 +16,6 @@ public interface ProdutoGateway {
 	List<Produto> getTodosOsProdutos();
 
 	List<Produto> getTodosOsProdutosPor(TipoProduto tipoProduto);
+	
+	Produto getProdutoPorNome(String nomeProduto);
 }

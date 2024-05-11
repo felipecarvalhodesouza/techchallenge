@@ -62,4 +62,11 @@ public class ProdutoController {
 	public List<Produto> getTodosOsProdutosPor(@PathVariable String tipoProduto) {
 		return produtoInteractor.getTodosOsProdutosPor(tipoProduto);
 	}
+	
+	@Operation(summary = "Retornar produto por nome")
+	@ApiResponse(responseCode = "200")
+	@GetMapping(path = "/")
+	public Produto getProdutoPorNome(String nomeProduto) {
+		return produtoInteractor.getProdutoPorNome(nomeProduto);
+	}
 }

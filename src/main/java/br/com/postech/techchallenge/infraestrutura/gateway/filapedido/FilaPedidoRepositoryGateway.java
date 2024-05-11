@@ -21,6 +21,7 @@ public class FilaPedidoRepositoryGateway implements FilaPedidoGateway{
 	}
 
 	@Override
+	@Transactional
 	public List<FilaPedido> getFilaPedido() {
 		return filaPedidoRepository.getFilaPedido()
 								   .stream()

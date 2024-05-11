@@ -20,4 +20,6 @@ public interface PedidoGateway {
 	Pedido getPedidoPor(long pedidoId) throws PedidoInexistenteException;
 	
 	String getStatusPedido(long pedidoId) throws PedidoInexistenteException;
+	
+	void excluir(long pedidoId) throws PedidoInexistenteException;
 }

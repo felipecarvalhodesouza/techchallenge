@@ -41,4 +41,8 @@ public class ProdutoInteractor {
 		}
 		return produtoGateway.getTodosOsProdutosPor(tipoProdutoEnum);
 	}
+	
+	public Produto getProdutoPorNome(String nomeProduto) {
+		return produtoGateway.getProdutoPorNome(nomeProduto);
+	}
 }
