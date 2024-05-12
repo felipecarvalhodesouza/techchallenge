@@ -20,4 +20,4 @@ INSERT IGNORE INTO produto (ds_nome_produto, ds_tipo_produto, nm_valor) VALUES
     ('Wrap de Frango', 'LANCHE', 13.49);
     
 INSERT IGNORE INTO cliente (id, ds_cpf, ds_email, ds_nome) VALUES
-    (1, 12345678909, 'email@provedor.com.br', 'John Doe');
+    (1, 12345678909, 'email@provedor.com.br', 'Felipe Carvalho de Souza');
