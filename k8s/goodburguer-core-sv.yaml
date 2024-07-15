@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: goodburguer-core-service
   labels:
-    app: goodburguer-app
+    app: goodburguer-core-app
 spec:
   type: LoadBalancer
   selector:
-    app: goodburguer-app
+    app: goodburguer-core-app
   ports:
     - protocol: TCP
       port: 8080
