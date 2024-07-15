@@ -76,10 +76,11 @@ jobs:
         run: kubectl apply -f ./k8s/goodburguer-core-keys.yaml
 
       - name: Deploy Application
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         run: kubectl apply -f ./k8s/goodburguer-core.yaml
 
       - name: Deploy Service
         run: kubectl apply -f ./k8s/goodburguer-core-sv.yaml
-
-      - name: Deploy Service Account
-        run: kubectl apply -f ./k8s/service-account.yaml
