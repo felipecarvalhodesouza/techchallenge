@@ -27,6 +27,7 @@ spec:
       containers:
       - name: goodburguer
         image: felipecarvalhodesouza/goodburguer:latest
+
         resources:
             requests:
               cpu: 500m
