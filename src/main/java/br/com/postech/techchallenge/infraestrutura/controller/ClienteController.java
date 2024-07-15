@@ -1,7 +1,9 @@
 package br.com.postech.techchallenge.infraestrutura.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +46,7 @@ public class ClienteController {
 	@Operation(summary = "Registrar um cliente", description ="Deve enviar os dados necessários para guardar um cliente no sistema")
 	@ApiResponse(responseCode = "201", description = "Cliente registrado com sucesso")
 	@PostMapping
-	public Cliente registrar(@RequestBody Cliente cliente) throws CpfDuplicadoException {
+	public Cliente registrar(@RequestBody Cliente cliente) throws CpfDuplicadoException, IOException {
 		return clienteInteractor.registrar(cliente);
 	}
 
@@ -58,9 +60,10 @@ public class ClienteController {
 	@Operation(summary = "Remover um cliente", description ="Remover um cliente")
 	@ApiResponse(responseCode = "204")
 	@DeleteMapping(path = "/{id}")
-	public void removerCliente(@PathVariable Long id) throws ClienteInexistenteException {
+	public ResponseEntity<Object> removerCliente(@PathVariable Long id) throws ClienteInexistenteException {
 		Cliente cliente = clienteInteractor.buscarPor(id);
 		clienteInteractor.remover(cliente);
+		return ResponseEntity.noContent().build();
 	}
 
 	@Operation(summary = "Retornar todos os clientes (ADM)", description ="Retorna todos os clientes cadastrados")

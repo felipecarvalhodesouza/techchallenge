@@ -7,6 +7,7 @@ import br.com.postech.techchallenge.application.gateway.ClienteGateway;
 import br.com.postech.techchallenge.application.usecases.ClienteInteractor;
 import br.com.postech.techchallenge.infraestrutura.gateway.cliente.ClienteEntityMapper;
 import br.com.postech.techchallenge.infraestrutura.gateway.cliente.ClienteRepositoryGateway;
+import br.com.postech.techchallenge.infraestrutura.helper.HttpHelper;
 import br.com.postech.techchallenge.infraestrutura.persistence.cliente.ClienteRepository;
 
 @Configuration
@@ -18,12 +19,17 @@ public class ClienteConfig {
 	}
 
 	@Bean
-	ClienteGateway clienteGateway(ClienteRepository clienteRepository, ClienteEntityMapper mapper) {
-		return new ClienteRepositoryGateway(clienteRepository, mapper);
+	ClienteGateway clienteGateway(ClienteRepository clienteRepository, ClienteEntityMapper mapper, HttpHelper httpHelper) {
+		return new ClienteRepositoryGateway(clienteRepository, mapper, httpHelper);
 	}
 
 	@Bean
 	ClienteEntityMapper clienteEntityMapper() {
 		return new ClienteEntityMapper();
+	}
+	
+	@Bean
+	HttpHelper createHttpHelper() {
+		return new HttpHelper();
 	}
 }

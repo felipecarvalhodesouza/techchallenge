@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.postech.techchallenge.application.gateway.PedidoGateway;
 import br.com.postech.techchallenge.domain.entity.Pedido;
-import br.com.postech.techchallenge.domain.entity.enumeration.StatusPagamento;
 import br.com.postech.techchallenge.domain.entity.exception.PedidoInexistenteException;
+import br.com.postech.techchallenge.infraestrutura.helper.SQSHelper;
 import br.com.postech.techchallenge.infraestrutura.persistence.pedido.PedidoEntity;
 import br.com.postech.techchallenge.infraestrutura.persistence.pedido.PedidoRepository;
 
@@ -16,36 +16,32 @@ public class PedidoRepositoryGateway implements PedidoGateway{
 
 	private final PedidoRepository pedidoRepository;
 	private PedidoEntityMapper mapper;
+	private final SQSHelper sqsHelper;
 
-	public PedidoRepositoryGateway(PedidoRepository pedidoRepository, PedidoEntityMapper mapper) {
+	public PedidoRepositoryGateway(PedidoRepository pedidoRepository, PedidoEntityMapper mapper, SQSHelper sqsHelper) {
 		this.pedidoRepository = pedidoRepository;
 		this.mapper = mapper;
+		this.sqsHelper = sqsHelper;
 	}
 	
 	@Override
 	public Pedido inserir(Pedido pedido) {
-		PedidoEntity entity = pedidoRepository.save(mapper.toEntity(pedido));
-		return mapper.toDomainObject(entity);
+		Pedido pedidoInserido = mapper.toDomainObject(pedidoRepository.save(mapper.toEntity(pedido)));
+		
+		// Enviar mensagem para serviço de pagamento
+		sqsHelper.enviarMensagem(pedidoInserido);
+		
+		return pedidoInserido;
 	}
 
 	@Override
 	@Transactional
-	public List<Pedido> getPedidosPorCliente(long clienteId) {
+	public List<Pedido> getPedidosPor(String usuarioId) {
+		long clienteId = 1l;
+		
 		return pedidoRepository.getByClienteId(clienteId).stream()
 														 .map(entity -> mapper.toDomainObject(entity))
 														 .collect(Collectors.toList());
-	}
-
-	@Override
-	public void aprovarPagamento(Pedido pedido) {
-		pedido.setStatusPagamento(StatusPagamento.APROVADO);
-		pedidoRepository.save(mapper.toEntity(pedido));
-	}
-
-	@Override
-	public void recusarPagamento(Pedido pedido) {
-		pedido.setStatusPagamento(StatusPagamento.RECUSADO);
-		pedidoRepository.save(mapper.toEntity(pedido));
 	}
 
 	@Override
@@ -55,12 +51,6 @@ public class PedidoRepositoryGateway implements PedidoGateway{
 		return mapper.toDomainObject(entity);
 	}
 
-	@Override
-	@Transactional
-	public String getStatusPedido(long pedidoId) throws PedidoInexistenteException {
-		PedidoEntity entity = pedidoRepository.findById(pedidoId).orElseThrow(() -> new PedidoInexistenteException());
-		return entity.getStatusPagamento().getDescricao();
-	}
 	
 	@Override
 	public void excluir(long pedidoId) throws PedidoInexistenteException {

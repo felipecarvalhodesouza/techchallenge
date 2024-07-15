@@ -1,5 +1,6 @@
 package br.com.postech.techchallenge.application.usecases;
 
+import java.io.IOException;
 import java.util.List;
 
 import br.com.postech.techchallenge.application.gateway.ClienteGateway;
@@ -23,7 +24,7 @@ public class ClienteInteractor {
 		return clienteGateway.buscarPor(id);
 	}
 	
-	public Cliente registrar(Cliente cliente) throws CpfDuplicadoException {
+	public Cliente registrar(Cliente cliente) throws CpfDuplicadoException, IOException {
 
 		if (clienteGateway.buscarPorCpf(cliente) != null) {
 			throw new CpfDuplicadoException();
