@@ -1,25 +1,17 @@
 package br.com.postech.techchallenge.infraestrutura.persistence.pedido;
 
-import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
-import br.com.postech.techchallenge.domain.entity.enumeration.StatusPagamento;
 import br.com.postech.techchallenge.infraestrutura.persistence.cliente.ClienteEntity;
-import br.com.postech.techchallenge.infraestrutura.persistence.filapedido.FilaPedidoEntity;
-import br.com.postech.techchallenge.infraestrutura.persistence.produto.ProdutoEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 
 @Entity(name = "pedido")
 public class PedidoEntity {
@@ -28,9 +20,8 @@ public class PedidoEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToMany
-	@JoinTable(name = "pedido_produto", joinColumns = @JoinColumn(name = "pedido_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
-	private List<ProdutoEntity> produtoList;
+	@Column(columnDefinition = "json")
+	private String produtos;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cliente_id")
@@ -38,12 +29,6 @@ public class PedidoEntity {
 
 	@Column(name = "qt_valor_total")
 	private double valorTotal;
-	
-	@Enumerated(EnumType.ORDINAL)
-	private StatusPagamento statusPagamento = StatusPagamento.PENDENTE;
-	
-    @OneToOne(mappedBy = "pedido", cascade = CascadeType.REMOVE, optional = true)
-    private FilaPedidoEntity filaPedido;
 
 	public Long getId() {
 		return id;
@@ -53,19 +38,14 @@ public class PedidoEntity {
 		this.id = id;
 	}
 
-	public List<ProdutoEntity> getProdutoList() {
-		return produtoList;
+	public String getProdutos() {
+		return produtos;
 	}
 
-	public void setProdutoList(List<ProdutoEntity> produtoList) {
-		this.produtoList = produtoList;
-		
-		if (produtoList != null) {
-			produtoList.stream().map(ProdutoEntity::getValor).forEach(valor -> valorTotal += valor);
-		}
+	public void setProdutos(String produtos) throws JsonMappingException, JsonProcessingException {
+		this.produtos = produtos;
 	}
 
-	
 	public ClienteEntity getCliente() {
 		return cliente;
 	}
@@ -80,21 +60,5 @@ public class PedidoEntity {
 
 	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
-	}
-
-	public StatusPagamento getStatusPagamento() {
-		return statusPagamento;
-	}
-
-	public void setStatusPagamento(StatusPagamento statusPagamento) {
-		this.statusPagamento = statusPagamento;
-	}
-
-	public FilaPedidoEntity getFilaPedido() {
-		return filaPedido;
-	}
-
-	public void setFilaPedido(FilaPedidoEntity filaPedido) {
-		this.filaPedido = filaPedido;
 	}
 }

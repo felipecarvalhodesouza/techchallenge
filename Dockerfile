@@ -2,7 +2,7 @@ FROM openjdk:17-oracle
 
 WORKDIR /app
 
-COPY target/techchallenge-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY target/techchallenge-core-1.0.0-SNAPSHOT.jar /app/app.jar
 
 EXPOSE 8080
 

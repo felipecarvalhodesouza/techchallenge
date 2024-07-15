@@ -2,15 +2,12 @@ package br.com.postech.techchallenge.domain.entity;
 
 import java.util.List;
 
-import br.com.postech.techchallenge.domain.entity.enumeration.StatusPagamento;
-
 public class Pedido {
 
 	private Long id;
 	private List<Produto> produtoList;
 	private Cliente cliente;
 	private double valorTotal;
-	private StatusPagamento statusPagamento = StatusPagamento.PENDENTE;
 
 	public Long getId() {
 		return id;
@@ -48,13 +45,5 @@ public class Pedido {
 
 	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
-	}
-
-	public StatusPagamento getStatusPagamento() {
-		return statusPagamento;
-	}
-
-	public void setStatusPagamento(StatusPagamento statusPagamento) {
-		this.statusPagamento = statusPagamento;
 	}
 }

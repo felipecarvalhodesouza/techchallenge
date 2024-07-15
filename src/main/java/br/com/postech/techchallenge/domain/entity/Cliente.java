@@ -30,10 +30,6 @@ public class Cliente {
 		return cpf;
 	}
 
-	public String getNumeroCpf() {
-		return cpf.getDocumento();
-	}
-
 	public void setCpf(CPF cpf) {
 		this.cpf = cpf;
 	}

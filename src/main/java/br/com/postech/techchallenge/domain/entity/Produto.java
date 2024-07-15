@@ -1,36 +1,16 @@
 package br.com.postech.techchallenge.domain.entity;
 
-import br.com.postech.techchallenge.domain.entity.enumeration.TipoProduto;
-
 public class Produto {
 
-	private Long id;
-	private String nomeProduto;
-	private TipoProduto tipoProduto;
+	private String id;
 	private double valor;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getNomeProduto() {
-		return nomeProduto;
-	}
-
-	public void setNomeProduto(String nomeProduto) {
-		this.nomeProduto = nomeProduto;
-	}
-
-	public TipoProduto getTipoProduto() {
-		return tipoProduto;
-	}
-
-	public void setTipoProduto(TipoProduto tipoProduto) {
-		this.tipoProduto = tipoProduto;
 	}
 
 	public double getValor() {
@@ -40,5 +20,4 @@ public class Produto {
 	public void setValor(double preco) {
 		this.valor = preco;
 	}
-
 }
