@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import br.com.postech.techchallenge.domain.entity.CPF;
 import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
 import br.com.postech.techchallenge.infraestrutura.persistence.cliente.ClienteEntity;
@@ -26,7 +25,7 @@ public class ClienteEntityMapperTest {
 		clienteDomain.setId(1L);
 		clienteDomain.setNome("Fulano");
 		clienteDomain.setEmail("fulano@test.com");
-		clienteDomain.setCpf(new CPF("123.456.789-09"));
+		clienteDomain.setCpf("12345678909");
 
 		ClienteEntity entity = mapper.toEntity(clienteDomain);
 
@@ -52,7 +51,7 @@ public class ClienteEntityMapperTest {
 		assertThat(clienteDomain.getId()).isEqualTo(1L);
 		assertThat(clienteDomain.getNome()).isEqualTo("Fulano");
 		assertThat(clienteDomain.getEmail()).isEqualTo("fulano@test.com");
-		assertThat(clienteDomain.getCpf().getDocumento()).isEqualTo("12345678909");
+		assertThat(clienteDomain.getCpf()).isEqualTo("12345678909");
 	}
 
 	@Test

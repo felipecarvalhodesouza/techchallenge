@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.postech.techchallenge.application.gateway.ClienteGateway;
-import br.com.postech.techchallenge.domain.entity.CPF;
 import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.CpfDuplicadoException;
@@ -40,7 +39,7 @@ public class ClienteInteractorTest {
 	void buscarPorCpf() throws CpfInvalidoException {
 
 		Cliente cliente = new Cliente();
-		cliente.setCpf(new CPF("123.456.789-09"));
+		cliente.setCpf("12345678909");
 
 		when(clienteGateway.buscarPorCpf(cliente)).thenReturn(cliente);
 
@@ -68,7 +67,7 @@ public class ClienteInteractorTest {
 	void registrarCliente() throws CpfDuplicadoException, IOException, CpfInvalidoException {
 
 		Cliente cliente = new Cliente();
-		cliente.setCpf(new CPF("123.456.789-09"));
+		cliente.setCpf("12345678909");
 
 		when(clienteGateway.buscarPorCpf(cliente)).thenReturn(null);
 		when(clienteGateway.registrar(cliente)).thenReturn(cliente);
@@ -84,7 +83,7 @@ public class ClienteInteractorTest {
 	void registrarClienteComCpfDuplicado() throws CpfInvalidoException {
 
 		Cliente cliente = new Cliente();
-		cliente.setCpf(new CPF("123.456.789-09"));
+		cliente.setCpf("12345678909");
 
 		when(clienteGateway.buscarPorCpf(cliente)).thenReturn(cliente);
 

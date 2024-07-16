@@ -6,7 +6,7 @@ public class Cliente {
 
 	private Long id;
 	private String nome;
-	private CPF cpf;
+	private String cpf;
 	private String email;
 	private List<Pedido> pedidoList;
 
@@ -26,11 +26,11 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public CPF getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(CPF cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
