@@ -8,6 +8,9 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -41,7 +44,7 @@ class PedidoControllerTest {
     }
 
     @Test
-    void deveInserirPedido() throws PedidoInvalidoException, ClienteInexistenteException {
+    void deveInserirPedido() throws PedidoInvalidoException, ClienteInexistenteException, MalformedURLException, IOException {
         Pedido pedido = new Pedido();
         pedido.setValorTotal(100.0);
         when(pedidoInteractor.inserir(any(Pedido.class))).thenReturn(pedido);

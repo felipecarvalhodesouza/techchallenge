@@ -6,6 +6,8 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class PedidoInteractorTest {
 	}
 
 	@Test
-	void inserirPedidoValido() throws PedidoInvalidoException, ClienteInexistenteException {
+	void inserirPedidoValido() throws PedidoInvalidoException, ClienteInexistenteException, MalformedURLException, IOException {
 
 		Cliente cliente = new Cliente();
 		cliente.setId(1L);

@@ -1,5 +1,8 @@
 package br.com.postech.techchallenge.infraestrutura.gateway.pedido;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.postech.techchallenge.application.gateway.PedidoGateway;
 import br.com.postech.techchallenge.domain.entity.Pedido;
 import br.com.postech.techchallenge.domain.entity.exception.PedidoInexistenteException;
-import br.com.postech.techchallenge.infraestrutura.helper.SQSHelper;
+import br.com.postech.techchallenge.infraestrutura.helper.HttpHelper;
 import br.com.postech.techchallenge.infraestrutura.persistence.pedido.PedidoEntity;
 import br.com.postech.techchallenge.infraestrutura.persistence.pedido.PedidoRepository;
 
@@ -16,20 +19,20 @@ public class PedidoRepositoryGateway implements PedidoGateway{
 
 	private final PedidoRepository pedidoRepository;
 	private PedidoEntityMapper mapper;
-	private final SQSHelper sqsHelper;
+	private final HttpHelper httpHelper;
 
-	public PedidoRepositoryGateway(PedidoRepository pedidoRepository, PedidoEntityMapper mapper, SQSHelper sqsHelper) {
+	public PedidoRepositoryGateway(PedidoRepository pedidoRepository, PedidoEntityMapper mapper, HttpHelper httpHelper) {
 		this.pedidoRepository = pedidoRepository;
 		this.mapper = mapper;
-		this.sqsHelper = sqsHelper;
+		this.httpHelper = httpHelper;
 	}
 	
 	@Override
-	public Pedido inserir(Pedido pedido) {
+	public Pedido inserir(Pedido pedido) throws MalformedURLException, IOException {
 		Pedido pedidoInserido = mapper.toDomainObject(pedidoRepository.save(mapper.toEntity(pedido)));
 		
 		// Enviar mensagem para serviço de pagamento
-		sqsHelper.enviarMensagem(pedidoInserido);
+		httpHelper.sendPostRequest(String.format("{\"id\": \"%s\", \"valorTotal\": \"%d\"}", String.valueOf(pedido.getId()), pedido.getValorTotal()), new URL("http://a510a9de72f064953aaf7628714fffa0-1431959075.us-east-1.elb.amazonaws.com:8082/pagamentos"));
 		
 		return pedidoInserido;
 	}

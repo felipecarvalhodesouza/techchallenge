@@ -1,6 +1,8 @@
 package br.com.postech.techchallenge.application.usecases;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.util.List;
 
 import br.com.postech.techchallenge.application.gateway.ClienteGateway;
@@ -20,7 +22,7 @@ public class PedidoInteractor {
 		this.clienteGateway = clienteGateway;
 	}
 
-	public Pedido inserir(Pedido pedido) throws PedidoInvalidoException, ClienteInexistenteException {
+	public Pedido inserir(Pedido pedido) throws PedidoInvalidoException, ClienteInexistenteException, MalformedURLException, IOException {
 		if(BigDecimal.valueOf(0.0d).equals(BigDecimal.valueOf(pedido.getValorTotal()))) {
 			throw new PedidoInvalidoException();
 		}
