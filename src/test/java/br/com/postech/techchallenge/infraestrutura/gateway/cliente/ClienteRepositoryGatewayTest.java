@@ -39,7 +39,7 @@ public class ClienteRepositoryGatewayTest {
         Cliente cliente = new Cliente();
         cliente.setCpf("12345678909");
         ClienteEntity entity = new ClienteEntity();
-        when(clienteRepositoryMock.getByCpf(12345678909L)).thenReturn(entity);
+        when(clienteRepositoryMock.getByCpf("12345678909")).thenReturn(entity);
         when(mapperMock.toDomainObject(entity)).thenReturn(cliente);
 
         
@@ -48,7 +48,7 @@ public class ClienteRepositoryGatewayTest {
         
         assertThat(result).isNotNull();
         assertThat(result.getCpf()).isEqualTo("12345678909");
-        verify(clienteRepositoryMock).getByCpf(12345678909L);
+        verify(clienteRepositoryMock).getByCpf("12345678909");
         verify(mapperMock).toDomainObject(entity);
     }
 
