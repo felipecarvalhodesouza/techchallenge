@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.postech.techchallenge.application.gateway.ClienteGateway;
-import br.com.postech.techchallenge.domain.entity.CPF;
 import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
 import br.com.postech.techchallenge.infraestrutura.helper.HttpHelper;
@@ -38,7 +37,7 @@ public class ClienteRepositoryGatewayTest {
     void testBuscarPorCpf() throws CpfInvalidoException {
         
         Cliente cliente = new Cliente();
-        cliente.setCpf(new CPF("123.456.789-09"));
+        cliente.setCpf("12345678909");
         ClienteEntity entity = new ClienteEntity();
         when(clienteRepositoryMock.getByCpf(12345678909L)).thenReturn(entity);
         when(mapperMock.toDomainObject(entity)).thenReturn(cliente);
@@ -48,7 +47,7 @@ public class ClienteRepositoryGatewayTest {
 
         
         assertThat(result).isNotNull();
-        assertThat(result.getCpf().getDocumento()).isEqualTo("12345678909");
+        assertThat(result.getCpf()).isEqualTo("12345678909");
         verify(clienteRepositoryMock).getByCpf(12345678909L);
         verify(mapperMock).toDomainObject(entity);
     }

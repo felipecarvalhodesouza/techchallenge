@@ -26,7 +26,7 @@ public class ClienteRepositoryGateway implements ClienteGateway{
 
 	@Override
 	public Cliente buscarPorCpf(Cliente cliente) {
-		ClienteEntity entity = clienteRepository.getByCpf(Long.valueOf(cliente.getCpf().getDocumento()));
+		ClienteEntity entity = clienteRepository.getByCpf(Long.valueOf(cliente.getCpf()));
 		if(entity != null) {
 			return mapper.toDomainObject(entity);
 		}

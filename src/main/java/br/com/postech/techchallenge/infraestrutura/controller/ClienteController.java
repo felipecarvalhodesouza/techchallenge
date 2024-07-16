@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.postech.techchallenge.application.usecases.ClienteInteractor;
-import br.com.postech.techchallenge.domain.entity.CPF;
 import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.entity.exception.CpfDuplicadoException;
@@ -39,7 +38,7 @@ public class ClienteController {
 	@GetMapping
 	public Cliente getClientePor(String cpf) throws CpfInvalidoException {
 		Cliente cliente = new Cliente();
-		cliente.setCpf(new CPF(cpf));
+		cliente.setCpf(cpf);
 		return clienteInteractor.buscar(cliente);
 	}
 
