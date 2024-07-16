@@ -32,7 +32,7 @@ public class PedidoRepositoryGateway implements PedidoGateway{
 		Pedido pedidoInserido = mapper.toDomainObject(pedidoRepository.save(mapper.toEntity(pedido)));
 		
 		// Enviar mensagem para serviço de pagamento
-		httpHelper.sendPostRequest(String.format("{\"id\": \"%s\", \"valorTotal\": \"%d\"}", String.valueOf(pedido.getId()), pedido.getValorTotal()), new URL("http://a510a9de72f064953aaf7628714fffa0-1431959075.us-east-1.elb.amazonaws.com:8082/pagamentos"));
+		httpHelper.sendPostRequest(String.format("{\"id\": \"%s\", \"valorTotal\": \"%s\"}", String.valueOf(pedido.getId()), String.valueOf(pedido.getValorTotal())), new URL("http://a510a9de72f064953aaf7628714fffa0-1431959075.us-east-1.elb.amazonaws.com:8082/pagamentos"));
 		
 		return pedidoInserido;
 	}
