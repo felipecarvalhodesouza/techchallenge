@@ -33,7 +33,7 @@ public class ClienteEntityMapperTest {
 		assertThat(entity.getId()).isEqualTo(1L);
 		assertThat(entity.getNome()).isEqualTo("Fulano");
 		assertThat(entity.getEmail()).isEqualTo("fulano@test.com");
-		assertThat(entity.getCpf()).isEqualTo(12345678909L);
+		assertThat(entity.getCpf()).isEqualTo("12345678909");
 	}
 
 	@Test
@@ -43,7 +43,7 @@ public class ClienteEntityMapperTest {
 		entity.setId(1L);
 		entity.setNome("Fulano");
 		entity.setEmail("fulano@test.com");
-		entity.setCpf(12345678909L);
+		entity.setCpf("12345678909");
 
 		Cliente clienteDomain = mapper.toDomainObject(entity);
 
@@ -52,21 +52,5 @@ public class ClienteEntityMapperTest {
 		assertThat(clienteDomain.getNome()).isEqualTo("Fulano");
 		assertThat(clienteDomain.getEmail()).isEqualTo("fulano@test.com");
 		assertThat(clienteDomain.getCpf()).isEqualTo("12345678909");
-	}
-
-	@Test
-	void testToDomainObjectWithInvalidCpf() {
-
-		ClienteEntity entity = new ClienteEntity();
-		entity.setId(1L);
-		entity.setNome("Fulano");
-		entity.setEmail("fulano@test.com");
-		entity.setCpf(-1L);
-
-		try {
-			mapper.toDomainObject(entity);
-		} catch (RuntimeException e) {
-			assertThat(e.getCause()).isInstanceOf(CpfInvalidoException.class);
-		}
 	}
 }

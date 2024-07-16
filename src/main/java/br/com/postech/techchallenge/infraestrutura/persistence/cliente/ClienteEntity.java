@@ -23,8 +23,8 @@ public class ClienteEntity {
 	@Column(name = "ds_nome")
 	private String nome;
 
-	@Column(name = "ds_cpf", nullable = false, columnDefinition = "BIGINT DEFAULT 0")
-	private long cpf;
+	@Column(name = "ds_cpf")
+	private String cpf;
 
 	@Column(name = "ds_email")
 	String email;
@@ -49,11 +49,11 @@ public class ClienteEntity {
 		this.nome = nome;
 	}
 
-	public long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
