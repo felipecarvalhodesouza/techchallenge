@@ -1,5 +1,7 @@
 package br.com.postech.techchallenge.infraestrutura.controller;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class PedidoController {
 	@Operation(summary = "Inserir um pedido")
 	@ApiResponse(responseCode = "200")
 	@PostMapping
-	public Pedido inserir(@RequestBody Pedido pedido) throws PedidoInvalidoException, ClienteInexistenteException {
+	public Pedido inserir(@RequestBody Pedido pedido) throws PedidoInvalidoException, ClienteInexistenteException, MalformedURLException, IOException {
 		return pedidoInteractor.inserir(pedido);
 	}
 
