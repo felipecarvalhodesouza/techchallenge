@@ -1,10 +1,9 @@
-package unit.br.com.postech.techchallenge.domain.entity;
+package br.com.postech.techchallenge.domain.entity;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import br.com.postech.techchallenge.domain.entity.CPF;
 import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
 
 class CPFTest {
