@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.postech.techchallenge.domain.entity.Cliente;
-import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
+import br.com.postech.techchallenge.domain.exception.CpfInvalidoException;
 import br.com.postech.techchallenge.infraestrutura.persistence.cliente.ClienteEntity;
 
 public class ClienteEntityMapperTest {

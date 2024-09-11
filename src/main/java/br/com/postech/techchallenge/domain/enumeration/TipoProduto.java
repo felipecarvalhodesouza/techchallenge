@@ -1,4 +1,4 @@
-package br.com.postech.techchallenge.domain.entity.enumeration;
+package br.com.postech.techchallenge.domain.enumeration;
 
 public enum TipoProduto {
 	LANCHE("Lanche"), BEBIDA("Bebida"), ACOMPANHAMENTO("Acompanhamento");

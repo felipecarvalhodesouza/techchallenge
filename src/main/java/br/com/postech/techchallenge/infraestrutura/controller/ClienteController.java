@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.postech.techchallenge.application.usecases.ClienteInteractor;
 import br.com.postech.techchallenge.domain.entity.Cliente;
-import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
-import br.com.postech.techchallenge.domain.entity.exception.CpfDuplicadoException;
-import br.com.postech.techchallenge.domain.entity.exception.CpfInvalidoException;
+import br.com.postech.techchallenge.domain.exception.ClienteInexistenteException;
+import br.com.postech.techchallenge.domain.exception.CpfDuplicadoException;
+import br.com.postech.techchallenge.domain.exception.CpfInvalidoException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

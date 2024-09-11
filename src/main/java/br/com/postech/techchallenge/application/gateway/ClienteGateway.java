@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import br.com.postech.techchallenge.domain.entity.Cliente;
-import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
+import br.com.postech.techchallenge.domain.exception.ClienteInexistenteException;
 
 public interface ClienteGateway {
 

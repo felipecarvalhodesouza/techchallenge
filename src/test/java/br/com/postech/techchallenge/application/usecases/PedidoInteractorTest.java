@@ -21,9 +21,9 @@ import br.com.postech.techchallenge.application.gateway.ClienteGateway;
 import br.com.postech.techchallenge.application.gateway.PedidoGateway;
 import br.com.postech.techchallenge.domain.entity.Cliente;
 import br.com.postech.techchallenge.domain.entity.Pedido;
-import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
-import br.com.postech.techchallenge.domain.entity.exception.PedidoInexistenteException;
-import br.com.postech.techchallenge.domain.entity.exception.PedidoInvalidoException;
+import br.com.postech.techchallenge.domain.exception.ClienteInexistenteException;
+import br.com.postech.techchallenge.domain.exception.PedidoInexistenteException;
+import br.com.postech.techchallenge.domain.exception.PedidoInvalidoException;
 
 public class PedidoInteractorTest {
 
