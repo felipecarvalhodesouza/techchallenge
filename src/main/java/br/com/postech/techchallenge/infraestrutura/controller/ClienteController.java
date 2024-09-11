@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.postech.techchallenge.application.usecases.ClienteInteractor;
 import br.com.postech.techchallenge.domain.entity.Cliente;
+import br.com.postech.techchallenge.domain.entity.SolicitacaoExclusaoDadosPessoais;
 import br.com.postech.techchallenge.domain.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.exception.CpfDuplicadoException;
 import br.com.postech.techchallenge.domain.exception.CpfInvalidoException;
@@ -71,4 +72,12 @@ public class ClienteController {
 	public List<Cliente> getTodosOsClientes() {
 		return clienteInteractor.buscarTodos();
 	}
+	
+	@Operation(summary = "Endpoint para que o cliente possa solicitar a exclusão de seus dados pessoais do repositório do sistema ")
+	@ApiResponse(responseCode = "200")
+	@PostMapping(path = "/inativacao")
+	public void inativarClienteLgpd(@RequestBody SolicitacaoExclusaoDadosPessoais cliente) throws ClienteInexistenteException {
+		clienteInteractor.inativarClienteLgpd(cliente);
+	}
+	
 }

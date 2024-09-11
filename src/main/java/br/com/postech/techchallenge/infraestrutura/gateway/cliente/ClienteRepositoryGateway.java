@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 
 import br.com.postech.techchallenge.application.gateway.ClienteGateway;
 import br.com.postech.techchallenge.domain.entity.Cliente;
+import br.com.postech.techchallenge.domain.entity.SolicitacaoExclusaoDadosPessoais;
 import br.com.postech.techchallenge.domain.exception.ClienteInexistenteException;
+import br.com.postech.techchallenge.infraestrutura.helper.EncodingUtils;
 import br.com.postech.techchallenge.infraestrutura.helper.HttpHelper;
 import br.com.postech.techchallenge.infraestrutura.helper.PasswordGenerator;
 import br.com.postech.techchallenge.infraestrutura.persistence.cliente.ClienteEntity;
@@ -71,5 +73,23 @@ public class ClienteRepositoryGateway implements ClienteGateway{
 	public Cliente buscarPor(String email) throws ClienteInexistenteException {
 		ClienteEntity entity = clienteRepository.findByEmail(email).orElseThrow(() -> new ClienteInexistenteException());
 		return mapper.toDomainObject(entity);
+	}
+
+	@Override
+	public void inativarClienteLgpd(SolicitacaoExclusaoDadosPessoais clienteInativacao) throws ClienteInexistenteException {
+		Cliente cliente = this.buscarPor(Long.valueOf(clienteInativacao.getId()));
+		
+		if(!cliente.getNome().equals(clienteInativacao.getNome())) {
+			throw new RuntimeException("Dados incorretos para processar solicitação");
+		}
+		
+		try{
+			cliente.setCpf(null);
+			cliente.setNome(EncodingUtils.hashData(cliente.getNome()));
+			cliente.setEmail(EncodingUtils.hashData(cliente.getEmail()));
+			this.editar(cliente);
+		}catch (Exception e) {
+			throw new RuntimeException("Erro ao processar solicitação");
+		}
 	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import br.com.postech.techchallenge.domain.entity.Cliente;
+import br.com.postech.techchallenge.domain.entity.SolicitacaoExclusaoDadosPessoais;
 import br.com.postech.techchallenge.domain.exception.ClienteInexistenteException;
 
 public interface ClienteGateway {
@@ -21,4 +22,6 @@ public interface ClienteGateway {
 	void remover(Cliente cliente);
 
 	List<Cliente> buscarTodos();
+
+	void inativarClienteLgpd(SolicitacaoExclusaoDadosPessoais cliente) throws ClienteInexistenteException;
 }

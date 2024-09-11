@@ -9,7 +9,8 @@ import java.net.URL;
 
 public class HttpHelper {
 
-    private String API_URL = "https://7yy2pse5ii.execute-api.us-east-1.amazonaws.com/techchallenge/auth";
+    private String API_URL = "https://puppzqg8vb.execute-api.us-east-1.amazonaws.com/default/goodburguer-auth";
+    
     
     public String sendPostRequest(String requestBody) throws IOException {
     	return sendPostRequest(requestBody, (HttpURLConnection) new URL(API_URL).openConnection());

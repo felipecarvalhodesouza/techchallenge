@@ -11,7 +11,7 @@ import com.nimbusds.jose.shaded.gson.JsonParser;
 
 public class CognitoJwtDecoder {
 
-    private String COGNITO_JWKS_URL = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_pGFsCFVuS/.well-known/jwks.json";
+    private String COGNITO_JWKS_URL = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_hzdXzUH3o/.well-known/jwks.json";
 
     public RSAPublicKey getPublicKey(String kid) throws Exception {
         URL url = new URL(COGNITO_JWKS_URL);
