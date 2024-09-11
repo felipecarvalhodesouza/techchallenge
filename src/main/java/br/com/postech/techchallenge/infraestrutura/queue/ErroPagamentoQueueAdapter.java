@@ -1,9 +1,11 @@
 package br.com.postech.techchallenge.infraestrutura.queue;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Service;
 
 import br.com.postech.techchallenge.main.config.RabbitMQConfig;
 
+@Service
 public class ErroPagamentoQueueAdapter {
 
 	@RabbitListener(queues = RabbitMQConfig.QUEUE_NAME)
