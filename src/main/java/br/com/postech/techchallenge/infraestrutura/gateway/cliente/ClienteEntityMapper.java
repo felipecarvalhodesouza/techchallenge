@@ -12,7 +12,7 @@ public class ClienteEntityMapper {
 		BeanUtils.copyProperties(clienteDomain, entity);
 
 		if(clienteDomain.getCpf() != null) {
-			entity.setCpf(Long.valueOf(clienteDomain.getCpf()));
+			entity.setCpf(clienteDomain.getCpf());
 		}
 		
 		return entity;
