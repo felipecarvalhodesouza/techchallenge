@@ -10,12 +10,18 @@ public class ClienteEntityMapper {
 	public ClienteEntity toEntity(Cliente clienteDomain) {
 		ClienteEntity entity = new ClienteEntity();
 		BeanUtils.copyProperties(clienteDomain, entity);
+
+		if(clienteDomain.getCpf() != null) {
+			entity.setCpf(Long.valueOf(clienteDomain.getCpf()));
+		}
+		
 		return entity;
 	}
 
 	public Cliente toDomainObject(ClienteEntity entity) {
 		Cliente cliente = new Cliente();
 		BeanUtils.copyProperties(entity, cliente);
+		cliente.setCpf(String.valueOf(entity.getCpf()));
 		return cliente;
 	}
 }

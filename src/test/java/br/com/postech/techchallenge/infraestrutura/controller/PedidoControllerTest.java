@@ -21,9 +21,9 @@ import org.springframework.http.MediaType;
 
 import br.com.postech.techchallenge.application.usecases.PedidoInteractor;
 import br.com.postech.techchallenge.domain.entity.Pedido;
-import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
-import br.com.postech.techchallenge.domain.entity.exception.PedidoInexistenteException;
-import br.com.postech.techchallenge.domain.entity.exception.PedidoInvalidoException;
+import br.com.postech.techchallenge.domain.exception.ClienteInexistenteException;
+import br.com.postech.techchallenge.domain.exception.PedidoInexistenteException;
+import br.com.postech.techchallenge.domain.exception.PedidoInvalidoException;
 import br.com.postech.techchallenge.main.security.CognitoUserHelper;
 
 class PedidoControllerTest {

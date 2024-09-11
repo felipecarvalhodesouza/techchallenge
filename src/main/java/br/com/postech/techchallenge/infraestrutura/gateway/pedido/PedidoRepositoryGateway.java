@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.postech.techchallenge.application.gateway.PedidoGateway;
 import br.com.postech.techchallenge.domain.entity.Pedido;
-import br.com.postech.techchallenge.domain.entity.exception.PedidoInexistenteException;
+import br.com.postech.techchallenge.domain.exception.PedidoInexistenteException;
 import br.com.postech.techchallenge.infraestrutura.helper.HttpHelper;
 import br.com.postech.techchallenge.infraestrutura.persistence.pedido.PedidoEntity;
 import br.com.postech.techchallenge.infraestrutura.persistence.pedido.PedidoRepository;

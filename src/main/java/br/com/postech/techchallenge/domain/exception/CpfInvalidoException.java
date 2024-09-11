@@ -1,4 +1,4 @@
-package br.com.postech.techchallenge.domain.entity.exception;
+package br.com.postech.techchallenge.domain.exception;
 
 public class CpfInvalidoException extends Exception {
 

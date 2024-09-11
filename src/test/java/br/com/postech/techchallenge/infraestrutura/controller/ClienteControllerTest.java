@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 
 import br.com.postech.techchallenge.application.usecases.ClienteInteractor;
 import br.com.postech.techchallenge.domain.entity.Cliente;
-import br.com.postech.techchallenge.domain.entity.exception.ClienteInexistenteException;
+import br.com.postech.techchallenge.domain.exception.ClienteInexistenteException;
 import io.restassured.common.mapper.TypeRef;
 
 class ClienteControllerTest {
