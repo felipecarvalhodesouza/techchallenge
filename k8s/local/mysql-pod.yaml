@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  containers:
+  - name: mysql
+    image: mysql:8.0
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: rootpassword
+    ports:
+    - containerPort: 3306
+    volumeMounts:
+    - name: initdb
+      mountPath: /docker-entrypoint-initdb.d
+  volumes:
+  - name: initdb
+    configMap:
+      name: mysql-initdb-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+      nodePort: 32001
+  type: NodePort
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb-config
+data:
+  init-database.sql: |
+    CREATE DATABASE IF NOT EXISTS core;
+    CREATE DATABASE IF NOT EXISTS pagamento;
+    CREATE DATABASE IF NOT EXISTS preparo;
+
+    CREATE USER 'admin'@'%' IDENTIFIED BY 'adminpassword';
+
+    GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
+
+    FLUSH PRIVILEGES;

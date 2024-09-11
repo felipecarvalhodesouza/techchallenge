@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import br.com.postech.techchallenge.domain.entity.Pedido;
 import br.com.postech.techchallenge.domain.exception.PedidoInexistenteException;
-import br.com.postech.techchallenge.infraestrutura.helper.HttpHelper;
+import br.com.postech.techchallenge.domain.repository.IPagamentoQueueAdapter;
 import br.com.postech.techchallenge.infraestrutura.persistence.pedido.PedidoEntity;
 import br.com.postech.techchallenge.infraestrutura.persistence.pedido.PedidoRepository;
 
@@ -23,14 +23,14 @@ public class PedidoRepositoryGatewayTest {
     private PedidoRepository pedidoRepositoryMock;
     private PedidoEntityMapper mapperMock;
     private PedidoRepositoryGateway pedidoGateway;
-    private HttpHelper httpHelper;
+    private IPagamentoQueueAdapter pagamentoQueue;
 
     @BeforeEach
     void setUp() {
         pedidoRepositoryMock = mock(PedidoRepository.class);
         mapperMock = mock(PedidoEntityMapper.class);
-        httpHelper = mock(HttpHelper.class);
-        pedidoGateway = new PedidoRepositoryGateway(pedidoRepositoryMock, mapperMock, httpHelper);
+        pagamentoQueue = mock(IPagamentoQueueAdapter.class);
+        pedidoGateway = new PedidoRepositoryGateway(pedidoRepositoryMock, mapperMock, pagamentoQueue);
     }
 
     @Test

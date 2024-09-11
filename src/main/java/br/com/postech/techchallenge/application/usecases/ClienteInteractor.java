@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.postech.techchallenge.application.gateway.ClienteGateway;
 import br.com.postech.techchallenge.domain.entity.Cliente;
+import br.com.postech.techchallenge.domain.entity.SolicitacaoExclusaoDadosPessoais;
 import br.com.postech.techchallenge.domain.exception.ClienteInexistenteException;
 import br.com.postech.techchallenge.domain.exception.CpfDuplicadoException;
 
@@ -44,6 +45,10 @@ public class ClienteInteractor {
 
 	public void remover(Cliente cliente){
 		clienteGateway.remover(cliente);
+	}
+
+	public void inativarClienteLgpd(SolicitacaoExclusaoDadosPessoais cliente) throws ClienteInexistenteException {
+		clienteGateway.inativarClienteLgpd(cliente);
 	}
 	
 }
