@@ -16,10 +16,10 @@ public class PagamentoQueueAdapter implements IPagamentoQueueAdapter {
 
 	private final static String QUEUE_NAME = "mensageria_pedidos";
 	
-    @Value("${rabbitmq-host}")
+    @Value("${spring.rabbitmq.host}")
     private String rabbitmqhost;
     
-    @Value("${rabbitmq-port}")
+    @Value("${spring.rabbitmq.port}")
     private String rabbitmqport;
 	
 	@Override
@@ -31,7 +31,7 @@ public class PagamentoQueueAdapter implements IPagamentoQueueAdapter {
         try (Connection connection = factory.newConnection(); 
              Channel channel = connection.createChannel()) {
              
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+            channel.queueDeclare(QUEUE_NAME, true, false, false, null);
 
             channel.basicPublish("", QUEUE_NAME, 
                                  MessageProperties.PERSISTENT_TEXT_PLAIN, 

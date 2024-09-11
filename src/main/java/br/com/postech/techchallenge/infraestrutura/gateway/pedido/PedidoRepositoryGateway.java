@@ -34,6 +34,7 @@ public class PedidoRepositoryGateway implements PedidoGateway{
 		try {
 			pagamentoQueueAdapter.publicarPedidoRealizado(String.format("{\"id\": \"%s\", \"valorTotal\": \"%s\"}", String.valueOf(pedidoInserido.getId()), String.valueOf(pedido.getValorTotal())));
 		} catch (IOException | TimeoutException e) {
+			e.printStackTrace();
 			throw new RuntimeException("Erro ao inserir pedido.");
 		}
 		return pedidoInserido;
