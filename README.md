@@ -1,36 +1,61 @@
-# Esse projeto é o artefato do segundo tech challenge da Pós Tech da FIAP para o curso de Software Archtecture #
+# Esse projeto é um dos artefatos do último tech challenge da Pós Tech da FIAP para o curso de Software Archtecture #
 
-O objetivo é a criaçao de uma API para um sistema de auto atendimento de uma lanchonete.
-Os fluxos da API consistem em:
- * Cadastro/identificação de Clientes
- * CRUD e listagem de Produtos
- * CRUD de Pedidos (sem integração com métodos de pagamentos, por hora)
- * Consulta do status de pagamento de um pedido
- * Listagem da Fila de Pedidos de acordo com o status, e avanço de status de preparação.
-   
-![image](https://github.com/felipecarvalhodesouza/techchallenge/assets/36648569/bd8b1d68-4428-4ff1-880c-649fb2cfa91a)
+Os principais desafios dessa fase foram a determinação da estratégia de orquestração do SAGA Pattern, Desenvolvimento Seguro e LGDP.
 
-O projeto foi pensado para execução em um cluster kubernetes, considerando a escalabilidade de acordo com o processamento de CPU.
-De acordo com a atual implementação, os deployments onde a aplicação está rodando são escaláveis, e possuem um load balancer para organização das requisições entre instâncias.
-Dentro do cluster, a aplicação se comunica com um deployment responsável pelo repositório de dados, que não possui implementação de escalabidade.
+No final da 4ª fase, o desenho da solução era o seguinte:
 
-O projeto foi implementado considerando os funcionamentos da arquitetura limpa, onde a regra de negócio, isto é, os casos de usos e entidades estão desacoplados da implementação de frameworks e linguagem, bem como entidades externas, como banco de dados.
-É possível realizar manutenção sem risco de quebrar a aplicação, pois o desenvolvimento é voltado a interfaces, seguindo todos os princípios de SOLID.
+![image](https://github.com/user-attachments/assets/fbc2b0e2-dba3-41d5-9c55-adde6b8f9668)
+Na verdade, a primeira ideia foi utilizar o SQS, realizando trigger de lambdas que faziam requsições HTTP para os microserviços.
+Porém, no final não foi possível configurar corretamente as credenciais da AWS e os Pods não tinham acesso ao envio de mensagens.
+Dessa forma, foi entregue totalmente síncrono, com todos os microserviços se comunicando diretamente.
 
-Como a origem do projeto era um Spring Boot, que usa muito dos conceitos MVC, o desafio foi desacoplar o projeto do framework, principalmente nas questões relacionadas a entidades, pois o Spring Data acopla muito as entidades do domínio com as entidades do banco de dados.
+Para a 5ª fase, houve uma completa refatoração da estrutura de mensageria:
 
-Passos para execução do projeto:
-* 1 - Realizar o clone do projeto, para que os arquivos manifesto estejam disponíveis (pasta kubernetes).
-* 2 - Dentro da raiz do projeto, abrir um terminal e executar os comandos na seguinte ordem:
-   * kubectl apply -f .\kubernetes\mysql-db-config.yaml
-   * kubectl apply -f .\kubernetes\mysql-db-secret.yaml
-   * kubectl apply -f .\kubernetes\mysql-db.yaml
-   * kubectl apply -f .\kubernetes\components.yaml (opcional se já houver um deployment de metrics-server no kube-system)
-   * kubectl apply -f .\kubernetes\goodburguer-hpa.yaml
-   * kubectl apply -f .\kubernetes\goodburguer.yaml
-* 3 - Com os deployments devidamente em funcionamento, será possível acessar a API localmente. É possível acessar a documentação do projeto no link:
- http://localhost:8080/swagger-ui/index.html#/
-* 4 - Caso a utilização do Postman seja preferível, é possível baixar as Collections necessárias no link abaixo (necessário utilização do Postman Desktop por se tratar de chamadas locais) :
- https://www.postman.com/felipe-carvalho-de-souza/workspace/techchallenge-fiap-ps-tech/overview
-* 5 - Video com a apresentação da arquitetura Kubernetes:
-   * https://youtu.be/eMywqzE6Dvs 
+![microserviços](https://github.com/user-attachments/assets/5968f92f-29ec-47a2-afc4-dabe4aa0691e)
+No contexto atual, foi implementado Pod do RabbitMQ para ser o Message Broker da solução, e definidas três filas de comunicação entre os serviços.
+Ao incluir um pedido, é enviada mensagem para a fila, que está sendo escutada pelo microserviço de pagamentos.
+
+Ao realizar o pagamento, é enviada mensagem para a fila de pagamentos aprovados, que está sendo escutada pelo serviço de preparo/cozinha.
+No caso de erros no pagamento, ou pagamento recusado, é enviado mensagem para a fila de erros de pagamento, que é escutada pelo próprio serviço 'core', de pedidos, que notifica o cliente.
+
+Na arquitetura da solução da AWS, temos três bancos RDS e um banco MongoDB Atlas, todos os serviços estão compartilhando um EKS, e o acesso aos serviços é feito através de load balancers.
+
+Além disso, existe o serviço de autenticação no Cognito, que cadastra o usuário em um pool do identity provider.
+
+Sobre a decisão de utilizar a coreografia, veio do fato da solução inicial já ter ido por esse caminho.
+Alterar para orquestração envolveria alterar completamente todos os fluxos que já faziam a comunicação respectiva de suas responsabilidades.
+A coreografia de SAGA em microsserviços promove maior descentralização, permitindo que cada serviço se auto-organize em resposta a eventos, o que aumenta a flexibilidade e escalabilidade. Reduz a dependência de um coordenador central, melhorando a autonomia dos serviços. Além disso, facilita a adaptação a mudanças no fluxo de trabalho distribuído.
+Por fim, a coreografia evita um microserviço muito grande que, para fazer a orquestração, pode gerar um ponto único de falhas.
+
+-------
+
+Para execução do projeto localmente, é necessário executar os seguintes comandos [local dos arquivos foi omitido para simplificar]:
+
+	* kubectl apply -f mysql-pod.yaml
+	* kubectl apply -f mongodb-pod.yaml
+	* kubectl apply -f rabbitmq-pod.yaml 
+	* export DATABASE_URL=jdbc:mysql://mysql-service:3306/core
+	* export DATABASE_PASSWORD=adminpassword
+	* envsubst < goodburguer-core-keys.yaml | kubectl apply -f -
+	* kubectl apply -f goodburguer-core-sv.yaml
+	* export RABBITMQ_URL=rabbitmq-service
+	* export RABBITMQ_PORT=5672
+	* envsubst < goodburguer-core.yaml | kubectl apply -f -
+	* export DATABASE_URL=jdbc:mysql://mysql-service:3306/pagamento
+	* export DATABASE_PASSWORD=adminpassword
+	* envsubst < goodburguer-pagamento-keys.yaml | kubectl apply -f -
+	* kubectl apply -f goodburguer-pagamento-sv.yaml
+	* kubectl apply -f service-account.yaml
+	* envsubst < goodburguer-pagamento.yaml | kubectl apply -f -
+	* export DATABASE_URL=jdbc:mysql://mysql-service:3306/preparo
+	* envsubst < goodburguer-preparo-keys.yaml | kubectl apply -f -
+	* kubectl apply -f goodburguer-preparo-sv.yaml
+	* envsubst < goodburguer-preparo.yaml | kubectl apply -f -
+	* export DATABASE_URL=mongodb://root:rootpassword@mongodb-service:27017/produtos?authSource=admin
+	* envsubst < goodburguer-produto-keys.yaml | kubectl apply -f -
+	* kubectl apply -f goodburguer-produto-sv.yaml
+	* kubectl apply -f goodburguer-produto.yaml
+
+ 
+* 5 - Video com a apresentação da soluçãõ:
+   * 
