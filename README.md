@@ -55,7 +55,10 @@ Para execução do projeto localmente, é necessário executar os seguintes coma
 	* envsubst < goodburguer-produto-keys.yaml | kubectl apply -f -
 	* kubectl apply -f goodburguer-produto-sv.yaml
 	* kubectl apply -f goodburguer-produto.yaml
-
  
-* 5 - Video com a apresentação da soluçãõ:
-   * 
+* Video com a apresentação da solução:
+   * https://youtu.be/hRooFquBibk
+* RELATÓRIO DE IMPACTO À PROTEÇÃO DE DADOS PESSOAIS
+   * https://drive.google.com/file/d/1eRxZcdEcjqMEGOGnW1UOC-xphmFuf6w6/view?usp=drive_link
+* Relatório ZAP
+  * https://drive.google.com/file/d/1eOvoZX5jAdNgJw8QhDAsaIUs9OxXpjVW/view?usp=drive_link
