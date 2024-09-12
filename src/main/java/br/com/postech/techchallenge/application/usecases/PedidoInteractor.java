@@ -40,4 +40,8 @@ public class PedidoInteractor {
 	public void delete(String pedidoId) throws PedidoInexistenteException {
 		pedidoGateway.excluir(Long.valueOf(pedidoId));
 	}
+
+	public Pedido getPedidosPorId(String idPedido) throws NumberFormatException, PedidoInexistenteException {
+		return pedidoGateway.getPedidoPor(Long.valueOf(idPedido));
+	}
 }
